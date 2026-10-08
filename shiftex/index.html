@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Shiftex — учёт смен для команд</title>
+<meta name="description" content="Shiftex — мобильное приложение для расписания, табеля и замен. Смены, часы и роли для небольших команд без сложных ERP. iOS и Android.">
+<meta name="theme-color" content="#f6f7fb">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%237c5cff'/%3E%3Cpath d='M42 20H26a7 7 0 0 0 0 14h12a7 7 0 0 1 0 14H22' stroke='white' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='44' cy='44' r='4' fill='%23c4b5fd'/%3E%3C/svg%3E">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --bg:#f6f7fb; --card:#ffffff; --ink:#14161f; --mut:#5d6478; --faint:#8b91a5;
+  --line:#e6e8f0; --acc:#7c5cff; --acc-2:#a78bfa; --acc-ink:#fff;
+  --r:26px; --r-s:16px;
+  --font:"Segoe UI",system-ui,-apple-system,Roboto,Inter,Arial,sans-serif;
+  --max:1120px;
+}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+body{margin:0;font-family:var(--font);background:var(--bg);color:var(--ink);line-height:1.6;
+  background-image:radial-gradient(1000px 520px at 90% -10%,rgba(167,139,250,.22),transparent 60%),
+  radial-gradient(800px 460px at -5% 20%,rgba(124,92,255,.12),transparent 55%)}
+a{color:var(--acc)}
+img,svg{display:block;max-width:100%}
+:focus-visible{outline:3px solid var(--acc);outline-offset:3px}
+.wrap{width:min(var(--max),100% - 2.2rem);margin-inline:auto}
+.skip{position:absolute;left:-9999px;top:0;background:var(--acc);color:#fff;padding:.6rem 1rem}
+.skip:focus{left:0}
+
+header{position:sticky;top:0;z-index:50;background:rgba(246,247,251,.85);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:1rem;height:70px}
+.brand{display:flex;align-items:center;gap:.65rem;text-decoration:none;color:var(--ink);font-weight:800;font-size:1.05rem}
+.mark{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--acc),var(--acc-2));display:grid;place-items:center;color:#fff;font-weight:900;box-shadow:0 8px 20px -8px rgba(124,92,255,.7)}
+.brand small{display:block;font-size:.62rem;font-weight:700;letter-spacing:.2em;color:var(--faint)}
+.links{display:none;gap:1.5rem;align-items:center}
+.links a{text-decoration:none;color:var(--mut);font-weight:600;font-size:.95rem}
+.links a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;border-radius:999px;padding:.8rem 1.4rem;
+  font-weight:700;font-size:.95rem;text-decoration:none;min-height:48px;cursor:pointer;border:1px solid transparent;transition:transform .15s,box-shadow .2s}
+.btn:active{transform:scale(.98)}
+.btn-p{background:var(--acc);color:var(--acc-ink);box-shadow:0 14px 34px -12px rgba(124,92,255,.75)}
+.btn-p:hover{box-shadow:0 18px 40px -12px rgba(124,92,255,.85)}
+.btn-g{background:#fff;border-color:var(--line);color:var(--ink)}
+.btn-g:hover{border-color:var(--acc-2)}
+.btn-sm{padding:.6rem 1.05rem;min-height:42px;font-size:.88rem}
+.burger{display:grid;place-items:center;width:46px;height:46px;border-radius:14px;border:1px solid var(--line);background:#fff;color:var(--ink)}
+.mmenu{display:none;border-top:1px solid var(--line);padding:.7rem 0 1rem}
+.mmenu.open{display:block}
+.mmenu a{display:block;padding:.85rem .3rem;text-decoration:none;font-weight:700;color:var(--mut);border-bottom:1px solid var(--line)}
+.mmenu .btn{width:100%;margin-top:.7rem}
+@media(min-width:920px){.links{display:flex}.burger,.mmenu{display:none!important}}
+
+section{padding:clamp(3rem,7vw,5rem) 0;scroll-margin-top:86px}
+.eyebrow{display:inline-block;background:rgba(124,92,255,.1);color:var(--acc);border:1px solid rgba(124,92,255,.25);
+  font-size:.75rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;padding:.4rem .85rem;border-radius:999px;margin-bottom:1.1rem}
+h1{font-size:clamp(2.1rem,6.4vw,3.6rem);line-height:1.08;letter-spacing:-.03em;margin:0 0 1rem}
+h2{font-size:clamp(1.6rem,4.2vw,2.4rem);line-height:1.15;letter-spacing:-.02em;margin:0 0 1rem}
+h3{margin:.2rem 0 .5rem;font-size:1.15rem}
+.grad{background:linear-gradient(92deg,var(--acc),var(--acc-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--mut);font-size:1.08rem;max-width:34rem;margin:0 0 1.6rem}
+.mut{color:var(--mut)} .small{font-size:.9rem}
+.sec-head{max-width:44rem;margin-bottom:1.8rem}
+.sec-head p{color:var(--mut);margin:.6rem 0 0}
+
+.hero-grid{display:grid;gap:2.4rem;align-items:center}
+@media(min-width:980px){.hero-grid{grid-template-columns:1.05fr .95fr;gap:3rem}}
+.cta{display:flex;flex-wrap:wrap;gap:.7rem}
+.trust{display:flex;flex-wrap:wrap;gap:.5rem;padding:0;list-style:none;margin:1.3rem 0 0}
+.trust li{font-size:.82rem;color:var(--mut);background:#fff;border:1px solid var(--line);border-radius:999px;padding:.4rem .85rem}
+
+/* phone mockup */
+.phone{width:min(320px,86%);margin-inline:auto;background:#11131c;border-radius:44px;padding:12px;box-shadow:0 50px 90px -40px rgba(30,20,80,.55);position:relative}
+.phone::before{content:"";position:absolute;top:20px;left:50%;transform:translateX(-50%);width:96px;height:22px;background:#11131c;border-radius:999px;z-index:2}
+.screen{background:#fff;border-radius:34px;overflow:hidden;min-height:560px;padding:38px 16px 18px}
+.scr-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.scr-top b{font-size:1rem}
+.scr-top span{font-size:.7rem;color:var(--faint);font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;font-size:.62rem;color:var(--faint);text-align:center;font-weight:700}
+.days{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:6px}
+.day{aspect-ratio:1/1.15;border-radius:10px;background:#f2f3f8;display:flex;flex-direction:column;justify-content:center;align-items:center;font-size:.7rem;font-weight:700;color:var(--mut)}
+.day.on{background:linear-gradient(160deg,var(--acc),var(--acc-2));color:#fff;box-shadow:0 10px 18px -10px rgba(124,92,255,.8)}
+.day.off{background:#ece9ff;color:var(--acc)}
+.shifts{margin-top:16px;display:grid;gap:8px}
+.shift{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:14px;padding:9px 11px;font-size:.76rem}
+.shift i{width:8px;height:32px;border-radius:6px;background:var(--acc);flex:none}
+.shift.v2 i{background:var(--acc-2)} .shift.v3 i{background:#34d399}
+.shift b{display:block;font-size:.82rem}
+.shift span{color:var(--faint);font-size:.7rem}
+.scr-bottom{margin-top:16px;display:flex;justify-content:space-around;border-top:1px solid var(--line);padding-top:12px;color:var(--faint);font-size:1.1rem}
+
+/* cards */
+.grid{display:grid;gap:1.1rem}
+@media(min-width:760px){.grid.c2{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1000px){.grid.c3{grid-template-columns:repeat(3,1fr)}}
+.grid.c3{grid-template-columns:1fr}
+@media(min-width:700px){.grid.c3{grid-template-columns:repeat(2,1fr)}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:1.5rem;box-shadow:0 18px 40px -30px rgba(30,20,80,.5);transition:transform .2s,box-shadow .25s}
+.card:hover{transform:translateY(-4px);box-shadow:0 26px 50px -28px rgba(30,20,80,.55)}
+.icon{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;font-size:1.35rem;background:rgba(124,92,255,.1);border:1px solid rgba(124,92,255,.22);margin-bottom:.9rem}
+.card p{color:var(--mut);font-size:.95rem;margin:.4rem 0 0}
+.chips{display:flex;flex-wrap:wrap;gap:.6rem}
+.chip{background:#fff;border:1px solid var(--line);border-radius:999px;padding:.55rem 1.05rem;font-weight:700;font-size:.9rem;color:var(--mut)}
+
+/* how */
+.how{display:grid;gap:1.1rem}
+@media(min-width:900px){.how{grid-template-columns:repeat(3,1fr)}}
+.how .card .n{font-size:.75rem;font-weight:800;letter-spacing:.16em;color:var(--acc);text-transform:uppercase}
+
+/* status band */
+.band{background:linear-gradient(135deg,#171426,#221a3d);border-radius:34px;padding:clamp(1.6rem,5vw,3rem);color:#eceafd;position:relative;overflow:hidden}
+.band::after{content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(167,139,250,.5),transparent 65%)}
+.band h2{color:#fff}
+.band p{color:#b9b4d6;max-width:38rem}
+.band .cta{margin-top:1.4rem;position:relative;z-index:1}
+.badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);
+  border-radius:999px;padding:.4rem .9rem;font-size:.78rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#dcd6ff;margin-bottom:1rem}
+.badge i{width:8px;height:8px;border-radius:50%;background:#fbbf24;box-shadow:0 0 10px #fbbf24}
+
+footer{border-top:1px solid var(--line);padding:1.8rem 0 2.6rem;color:var(--faint);font-size:.85rem}
+.f-row{display:flex;flex-direction:column;gap:.8rem}
+@media(min-width:760px){.f-row{flex-direction:row;justify-content:space-between;align-items:center}}
+.f-links{display:flex;gap:1.2rem;flex-wrap:wrap}
+.f-links a{color:var(--mut);text-decoration:none;font-weight:600}
+.f-links a:hover{color:var(--acc)}
+</style>
+</head>
+<body>
+<a class="skip" href="#features">К возможностям</a>
+
+<header>
+  <div class="wrap">
+    <nav class="nav" aria-label="Навигация Shiftex">
+      <a class="brand" href="/">
+        <span class="mark" aria-hidden="true">S</span>
+        <span>Shiftex<small>СМЕНЫ · ТАБЕЛЬ · ЗАМЕНЫ</small></span>
+      </a>
+      <div class="links">
+        <a href="#features">Возможности</a>
+        <a href="#how">Как работает</a>
+        <a href="#whom">Для кого</a>
+        <a href="#status">Статус</a>
+        <a class="btn btn-p btn-sm" href="#status">Ранний доступ</a>
+      </div>
+      <button class="burger" id="burger" aria-expanded="false" aria-controls="mmenu" aria-label="Открыть меню">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </nav>
+    <div class="mmenu" id="mmenu">
+      <a href="#features">Возможности</a>
+      <a href="#how">Как работает</a>
+      <a href="#whom">Для кого</a>
+      <a href="#status">Статус</a>
+      <a class="btn btn-p" href="#status">Ранний доступ</a>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- HERO -->
+<section>
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">iOS + Android · в разработке</span>
+      <h1>Смены, табель и замены — <span class="grad">в одном приложении</span></h1>
+      <p class="lead">Shiftex заменяет таблицы, переписки и бумажные табели: расписание видит вся команда, замены согласуются в один тап, часы и ставки считаются сами.</p>
+      <div class="cta">
+        <a class="btn btn-p" href="#status">Получить ранний доступ</a>
+        <a class="btn btn-g" href="#features">Что внутри</a>
+      </div>
+      <ul class="trust">
+        <li>🧩 Без ERP-бюрократии</li>
+        <li>📲 Push о заменах</li>
+        <li>📴 Работает офлайн</li>
+        <li>👥 Роли и права</li>
+      </ul>
+    </div>
+    <div class="phone" aria-label="Макет приложения Shiftex">
+      <div class="screen">
+        <div class="scr-top"><b>Неделя 41</b><span>Октябрь</span></div>
+        <div class="week"><span>ПН</span><span>ВТ</span><span>СР</span><span>ЧТ</span><span>ПТ</span><span>СБ</span><span>ВС</span></div>
+        <div class="days">
+          <div class="day on">6<span style="font-size:.55rem;font-weight:600">09–18</span></div>
+          <div class="day on">7<span style="font-size:.55rem;font-weight:600">09–18</span></div>
+          <div class="day off">8<span style="font-size:.55rem;font-weight:600">выходной</span></div>
+          <div class="day on">9<span style="font-size:.55rem;font-weight:600">12–21</span></div>
+          <div class="day on">10<span style="font-size:.55rem;font-weight:600">12–21</span></div>
+          <div class="day">11</div>
+          <div class="day">12</div>
+        </div>
+        <div class="shifts">
+          <div class="shift"><i></i><span><b>Смена А · 09:00–18:00</b><span>Зал · 3 человека · подтверждено</span></span></div>
+          <div class="shift v2"><i></i><span><b>Смена Б · 12:00–21:00</b><span>Склад · 2 человека · замена запрошена</span></span></div>
+          <div class="shift v3"><i></i><span><b>Итого за неделю: 40 ч</b><span>Табель сформирован автоматически</span></span></div>
+        </div>
+        <div class="scr-bottom"><span>📅</span><span>👥</span><span>📋</span><span>⚙️</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Возможности</span>
+      <h2>Всё, что нужно сменному бизнесу</h2>
+      <p>Без модулей, которые никто не настраивает — только рабочие сценарии.</p>
+    </div>
+    <div class="grid c3">
+      <div class="card"><div class="icon">📅</div><h3>Расписание</h3><p>Недельный и месячный вид, цветные смены, быстрое перетаскивание и шаблоны.</p></div>
+      <div class="card"><div class="icon">📋</div><h3>Табель и часы</h3><p>Отработанные часы и ставки считаются автоматически — данные для бухгалтерии готовы.</p></div>
+      <div class="card"><div class="icon">🔁</div><h3>Замены</h3><p>Сотрудник предлагает замену, менеджер подтверждает — переписка в мессенджере не нужна.</p></div>
+      <div class="card"><div class="icon">🔔</div><h3>Уведомления</h3><p>Push о новом расписании, заменах и приближающейся смене. Никаких «я не знал».</p></div>
+      <div class="card"><div class="icon">👥</div><h3>Роли</h3><p>Админ, менеджер и сотрудник: у каждого свой доступ к правкам и отчётам.</p></div>
+      <div class="card"><div class="icon">📴</div><h3>Offline-first</h3><p>Расписание доступно без сети и синхронизируется при появлении связи.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW -->
+<section id="how">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Как работает</span>
+      <h2>Три шага до спокойной недели</h2>
+    </div>
+    <div class="how">
+      <div class="card"><span class="n">Шаг 01</span><h3>Соберите команду</h3><p>Добавьте сотрудников, роли и точки работы. Импорт из таблицы — за минуту.</p></div>
+      <div class="card"><span class="n">Шаг 02</span><h3>Планируйте смены</h3><p>Шаблоны и перетаскивание: готовое расписание на неделю в один вечер.</p></div>
+      <div class="card"><span class="n">Шаг 03</span><h3>Живите спокойно</h3><p>Замены, табель и уведомления работают сами — вы контролируете исключения.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHOM -->
+<section id="whom">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Для кого</span>
+      <h2>Где смены — там и Shiftex</h2>
+      <p>Для небольших команд, где 5–50 человек работают по графику.</p>
+    </div>
+    <div class="chips">
+      <span class="chip">☕ Кафе и рестораны</span>
+      <span class="chip">📦 Склады и доставка</span>
+      <span class="chip">🛡 Охрана</span>
+      <span class="chip">🏥 Клиники и салоны</span>
+      <span class="chip">🏭 Производство</span>
+      <span class="chip">🛒 Розница</span>
+    </div>
+  </div>
+</section>
+
+<!-- STATUS -->
+<section id="status">
+  <div class="wrap">
+    <div class="band">
+      <span class="badge"><i></i> In development · beta скоро</span>
+      <h2>Ранний доступ к бета-версии</h2>
+      <p>Shiftex в разработке: ядро расписания и табеля уже работают, тестируем с первыми командами. Оставьте почту — пришлём приглашение на бета-тест и покажем роадмап.</p>
+      <div class="cta">
+        <a class="btn btn-p" id="betaBtn" href="mailto:hello@example.com?subject=Shiftex%20—%20ранний%20доступ">Запросить доступ</a>
+        <a class="btn btn-g" href="/">О студии EnCore</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap f-row">
+    <span>© <span id="year">2026</span> EnCore · Shiftex</span>
+    <span class="f-links">
+      <a href="/">Студия</a>
+      <a href="/auto-proxy-per-site/">Auto Proxy Per Site</a>
+      <a href="/tavernkeep/">Tavernkeep</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+const CONFIG = { email: "hello@example.com", betaSubject: "Shiftex — ранний доступ" };
+document.getElementById('betaBtn').href = 'mailto:' + CONFIG.email + '?subject=' + encodeURIComponent(CONFIG.betaSubject);
+
+const burger = document.getElementById('burger'), mmenu = document.getElementById('mmenu');
+burger.addEventListener('click', () => {
+  const open = mmenu.classList.toggle('open');
+  burger.setAttribute('aria-expanded', open);
+});
+mmenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  mmenu.classList.remove('open'); burger.setAttribute('aria-expanded', 'false');
+}));
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

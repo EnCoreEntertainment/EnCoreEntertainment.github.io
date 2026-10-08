@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Report a Bug — EnCore</title>
+<meta name="description" content="Found a bug in an EnCore product? Send a bug report. We read every message.">
+<meta name="theme-color" content="#05070f">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2305070f'/%3E%3Cpath d='M18 44 32 14l14 30h-9l-5-12-5 12z' fill='%2322d3ee'/%3E%3Ccircle cx='32' cy='44' r='4' fill='%23a78bfa'/%3E%3C/svg%3E">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{--bg:#05070f;--card:rgba(255,255,255,.045);--line:rgba(255,255,255,.1);--txt:#eef2ff;--mut:#9aa4bf;--cy:#22d3ee;--vi:#a78bfa;--lm:#a3e635;--pk:#f472b6;--r:18px;--font:system-ui,-apple-system,"Segoe UI",Roboto,Inter,Arial,sans-serif}
+body{margin:0;font-family:var(--font);background:var(--bg);color:var(--txt);line-height:1.6;background-image:radial-gradient(900px 480px at 85% -5%,rgba(167,139,250,.18),transparent 60%),radial-gradient(800px 420px at 8% 4%,rgba(34,211,238,.16),transparent 60%);background-attachment:fixed}
+.wrap{width:min(680px,100% - 2.2rem);margin-inline:auto;padding:clamp(2rem,6vw,4rem) 0}
+a{color:var(--cy)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:clamp(1.2rem,4vw,2rem)}
+h1{font-size:clamp(1.6rem,5vw,2.3rem);margin:.6rem 0 .4rem;letter-spacing:-.02em}
+.grad{background:linear-gradient(92deg,var(--cy),var(--vi) 55%,var(--pk));-webkit-background-clip:text;background-clip:text;color:transparent}
+.mut{color:var(--mut)}
+label{display:block;font-weight:700;margin:1rem 0 .4rem}
+input,textarea{width:100%;background:#020617;border:1px solid var(--line);border-radius:12px;color:var(--txt);padding:.85rem 1rem;font-size:1rem;font-family:inherit;min-height:50px}
+textarea{min-height:150px;resize:vertical}
+input:focus,textarea:focus{outline:2px solid var(--cy);outline-offset:2px;border-color:var(--cy)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;font-weight:800;border-radius:14px;padding:.9rem 1.4rem;font-size:1rem;border:1px solid transparent;cursor:pointer;min-height:52px;width:100%;margin-top:1.2rem;background:linear-gradient(135deg,var(--cy),#0ea5e9 45%,var(--vi));color:#020617}
+.btn:disabled{opacity:.55;cursor:wait}
+.hp{position:absolute!important;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+.status{border-radius:12px;padding:.9rem 1.1rem;margin-top:1rem;display:none;font-size:.95rem}
+.status.ok{display:block;background:rgba(163,230,53,.1);border:1px solid rgba(163,230,53,.45);color:var(--lm)}
+.status.err{display:block;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.45)}
+.fallback{display:none;margin-top:1rem;gap:.6rem;flex-wrap:wrap}
+.fallback.show{display:flex}
+.fallback a,.fallback button{flex:1;min-height:48px;border-radius:11px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--txt);font-weight:700;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;padding:.7rem;cursor:pointer;font-size:.9rem;white-space:nowrap}
+.back{display:inline-block;margin-bottom:1rem;text-decoration:none;font-weight:700}
+.small{font-size:.85rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="/">← Back to EnCore</a>
+  <div class="card">
+    <h1>Report a <span class="grad">bug</span></h1>
+    <p class="mut">Found something broken in an EnCore product? Tell us — we read every report. Fields marked * are required.</p>
+    <form id="bugForm" novalidate>
+      <label for="fName">Your name *</label>
+      <input id="fName" name="name" type="text" autocomplete="name" maxlength="80" required placeholder="Jane Doe">
+
+      <label for="fEmail">Your email *</label>
+      <input id="fEmail" name="email" type="email" autocomplete="email" maxlength="120" required placeholder="you@example.com">
+
+      <label for="fDesc">Bug description *</label>
+      <textarea id="fDesc" name="message" required maxlength="5000" placeholder="What happened? What did you expect? Steps to reproduce, browser / device, screenshots description…"></textarea>
+
+      <label for="fCheck">Anti-spam check * <span class="mut small" id="checkQ"></span></label>
+      <input id="fCheck" type="text" inputmode="numeric" autocomplete="off" required placeholder="Your answer">
+
+      <input class="hp" type="text" id="fCompany" name="company" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+      <button class="btn" id="sendBtn" type="submit">Send bug report</button>
+      <p class="small mut" id="hint" role="status" aria-live="polite" style="min-height:1.4em"></p>
+    </form>
+    <div class="status" id="statusBox" role="status" aria-live="polite"></div>
+    <div class="fallback" id="fallbackBox">
+      <a id="mailtoBtn" href="#">Open in email app</a>
+      <button id="copyBtn" type="button">Copy report</button>
+    </div>
+    <p class="small mut">No trackers on this page. Your report goes only to the EnCore team.</p>
+  </div>
+</div>
+<script>
+(function(){
+  "use strict";
+  var form=document.getElementById('bugForm'),btn=document.getElementById('sendBtn'),
+      hint=document.getElementById('hint'),box=document.getElementById('statusBox'),
+      fb=document.getElementById('fallbackBox'),checkQ=document.getElementById('checkQ'),
+      fCheck=document.getElementById('fCheck'),t0=Date.now();
+  // Email assembled at runtime (basic harvesting protection)
+  var TO=["encore",".","entertainment",".","2020","@","gmail",".","com"].join("");
+  // Simple math challenge, regenerated per load
+  var a=2+Math.floor(Math.random()*7),b=1+Math.floor(Math.random()*8);
+  checkQ.textContent="— what is "+a+" + "+b+"?";
+  function show(cls,msg){box.className="status "+cls;box.textContent=msg;}
+  function mailtoURI(n,e,d){
+    var s="EnCore bug report from "+n+" <"+e+">";
+    return "mailto:"+TO+"?subject="+encodeURIComponent(s)+"&body="+encodeURIComponent(d);
+  }
+  document.getElementById('mailtoBtn').addEventListener('click',function(ev){
+    ev.preventDefault();
+    location.href=mailtoURI(form.fName.value.trim(),form.fEmail.value.trim(),form.fDesc.value.trim());
+  });
+  document.getElementById('copyBtn').addEventListener('click',function(){
+    var t="BUG REPORT\nName: "+form.fName.value.trim()+"\nEmail: "+form.fEmail.value.trim()+"\n\n"+form.fDesc.value.trim();
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){hint.textContent="Report copied to clipboard.";});}
+    else{hint.textContent=t;}
+  });
+  form.addEventListener('submit',function(ev){
+    ev.preventDefault();
+    box.className="status";box.textContent="";fb.classList.remove("show");
+    var n=form.fName.value.trim(),e=form.fEmail.value.trim(),d=form.fDesc.value.trim();
+    if(!n||!e||!d){show("err","Please fill in all required fields.");return;}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e)){show("err","That email address does not look valid.");return;}
+    if(d.length<20){show("err","Please describe the bug in a bit more detail (at least 20 characters).");return;}
+    if(document.getElementById('fCompany').value){show("err","Submission rejected.");return;} // honeypot
+    if(Date.now()-t0<4000){show("err","Please take a moment to describe the issue, then try again.");return;} // time-trap
+    if(parseInt(fCheck.value.trim(),10)!==a+b){show("err","Wrong answer to the anti-spam question. Try again.");return;}
+    var last=0;try{last=parseInt(localStorage.getItem("encore_bug_ts")||"0",10);}catch(_){}
+    if(Date.now()-last<60000){show("err","You just sent a report. Please wait a minute before sending another.");return;}
+    btn.disabled=true;hint.textContent="Sending…";
+  // Primary delivery: owner's Google Apps Script web app (reliable, server-side throttle).
+  // Endpoint + secret assembled at runtime (basic harvesting protection).
+  var GAS_EP=["https://script.google.com/macros/s/","AKfycbwKQ1tf0y96Y-DBHE3mvQG2nfpK-Wj3MmA3lxu4501tifZp0kf0YOWiqMRI-FairGzB","/exec"].join("");
+  var GAS_SECRET=["hiYvgqYLTvQFIBpJ","_fHZ_Ef9fIbQkPD5"].join("");
+    var payload={secret:GAS_SECRET,name:n,email:e,message:d,page:location.href};
+    var ctrl=new AbortController(),to=setTimeout(function(){ctrl.abort();},20000);
+    fetch(GAS_EP,{
+      method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},
+      body:JSON.stringify(payload),signal:ctrl.signal
+    }).then(function(r){clearTimeout(to);if(!r.ok)throw new Error("HTTP "+r.status);return r.json();})
+    .then(function(res){
+      if(!res||res.ok!==true)throw new Error((res&&res.error)||"rejected");
+      try{localStorage.setItem("encore_bug_ts",String(Date.now()));}catch(_){}
+      show("ok","Thank you, "+n+"! Your bug report was sent. We will reply to "+e+" if we need details.");
+      form.reset();t0=Date.now();
+    }).catch(function(){
+      // FAULT-TOLERANT FALLBACK: email app + clipboard copy
+      show("err","Automatic delivery failed (network or service issue). Use the buttons below — nothing is lost.");
+      document.getElementById('mailtoBtn').href=mailtoURI(n,e,d);
+      fb.classList.add("show");
+    }).finally(function(){btn.disabled=false;hint.textContent="";});
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tavernkeep — симулятор хозяина таверны</title>
+<meta name="description" content="Tavernkeep — игра студии EnCore: симулятор хозяина таверны в мире тёмного фэнтези. От придорожной корчмы до города с экономикой. Концепт, PC + Mobile.">
+<meta name="theme-color" content="#0b0907">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230b0907'/%3E%3Cpath d='M20 16h18a8 8 0 0 1 0 16h-4v10a6 6 0 0 1-6 6h-4a6 6 0 0 1-6-6V16z' fill='none' stroke='%23d4a24c' stroke-width='3'/%3E%3Cpath d='M38 20h4a5 5 0 0 1 0 10h-4' stroke='%23d4a24c' stroke-width='3' fill='none'/%3E%3Ccircle cx='27' cy='24' r='2' fill='%23a3e635'/%3E%3C/svg%3E">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --bg:#0b0907; --bg2:#100d0a; --panel:#141009; --line:#3a2f1f; --gold:#d4a24c; --gold-dim:#8a6b39;
+  --parch:#e8d9bd; --mut:#a2937a; --lm:#a3e635; --blood:#b4462f;
+  --serif:Georgia,"Palatino Linotype","Times New Roman",serif;
+  --max:1080px;
+}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+body{margin:0;font-family:var(--serif);background:var(--bg);color:var(--parch);line-height:1.75;
+  background-image:radial-gradient(1200px 700px at 50% -10%,rgba(212,162,76,.09),transparent 60%),
+  radial-gradient(900px 600px at 100% 100%,rgba(163,230,53,.05),transparent 55%),
+  repeating-linear-gradient(45deg,rgba(255,255,255,.012) 0 2px,transparent 2px 6px)}
+a{color:var(--gold)}
+img,svg{display:block;max-width:100%}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.wrap{width:min(var(--max),100% - 2.2rem);margin-inline:auto}
+.skip{position:absolute;left:-9999px;top:0;background:var(--gold);color:#1a1206;padding:.6rem 1rem}
+.skip:focus{left:0}
+
+header{position:sticky;top:0;z-index:50;background:rgba(11,9,7,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:1rem;height:68px}
+.brand{display:flex;align-items:center;gap:.7rem;text-decoration:none;color:var(--parch)}
+.mark{width:38px;height:38px;border:1px solid var(--gold-dim);display:grid;place-items:center;color:var(--gold);font-size:1.15rem;background:var(--panel);transform:rotate(-3deg)}
+.brand b{font-size:1.1rem;letter-spacing:.12em;font-weight:400;text-transform:uppercase}
+.brand small{display:block;font-size:.6rem;letter-spacing:.3em;color:var(--gold-dim);text-transform:uppercase}
+.links{display:none;gap:1.4rem;align-items:center}
+.links a{text-decoration:none;color:var(--mut);font-size:.95rem;letter-spacing:.04em}
+.links a:hover{color:var(--gold)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.75rem 1.4rem;text-decoration:none;
+  font-family:var(--serif);font-size:.98rem;letter-spacing:.06em;min-height:46px;cursor:pointer;background:transparent;color:var(--parch);
+  border:1px solid var(--gold-dim);transition:background .2s,color .2s,box-shadow .2s}
+.btn:hover{background:rgba(212,162,76,.12);box-shadow:0 0 24px -8px rgba(212,162,76,.6)}
+.btn-p{background:var(--gold);color:#1a1206;border-color:var(--gold);font-weight:700}
+.btn-p:hover{background:#e6b45f;color:#1a1206}
+.btn-sm{padding:.55rem 1rem;min-height:40px;font-size:.88rem}
+.burger{display:grid;place-items:center;width:44px;height:44px;border:1px solid var(--line);background:var(--panel);color:var(--gold)}
+.mmenu{display:none;border-top:1px solid var(--line);padding:.6rem 0 1rem}
+.mmenu.open{display:block}
+.mmenu a{display:block;padding:.8rem .2rem;text-decoration:none;color:var(--mut);border-bottom:1px dashed var(--line);letter-spacing:.06em}
+@media(min-width:900px){.links{display:flex}.burger,.mmenu{display:none!important}}
+
+section{padding:clamp(3rem,7vw,5rem) 0;scroll-margin-top:80px}
+.rule{display:flex;align-items:center;gap:1rem;color:var(--gold-dim);margin:0 0 1.6rem;font-size:.9rem}
+.rule::before,.rule::after{content:"";height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);flex:1}
+.label{display:block;text-align:center;font-size:.72rem;letter-spacing:.42em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:.9rem}
+h1{font-size:clamp(2.4rem,8vw,4.6rem);line-height:1.04;letter-spacing:.04em;text-transform:uppercase;text-align:center;margin:0 0 .8rem;font-weight:400}
+h2{font-size:clamp(1.5rem,4vw,2.3rem);letter-spacing:.06em;text-transform:uppercase;text-align:center;margin:0 0 .8rem;font-weight:400}
+h3{font-size:1.15rem;letter-spacing:.04em;margin:.2rem 0 .5rem}
+p{margin:.7rem 0}
+.mut{color:var(--mut)}
+.small{font-size:.9rem}
+.center{text-align:center}
+.sub{text-align:center;color:var(--mut);max-width:40rem;margin:0 auto 2rem;font-style:italic}
+
+/* hero */
+.hero{padding-top:clamp(2.5rem,6vw,4rem);position:relative}
+.crest{width:76px;height:76px;margin:0 auto 1.4rem;border:1px solid var(--gold-dim);display:grid;place-items:center;font-size:2.1rem;background:var(--panel);transform:rotate(45deg)}
+.crest span{transform:rotate(-45deg)}
+.hero-frame{border:1px solid var(--line);background:linear-gradient(180deg,rgba(20,16,9,.9),rgba(11,9,7,.9));padding:clamp(1.6rem,5vw,3rem);position:relative;margin-top:2rem}
+.hero-frame::before,.hero-frame::after{content:"✦";position:absolute;color:var(--gold-dim);font-size:.9rem}
+.hero-frame::before{top:8px;left:12px} .hero-frame::after{bottom:8px;right:12px}
+.cta{display:flex;justify-content:center;flex-wrap:wrap;gap:.8rem;margin-top:1.6rem}
+.ornament{text-align:center;color:var(--gold-dim);letter-spacing:.6em;margin-top:1.6rem}
+
+/* lore */
+.lore{display:grid;gap:1.8rem}
+@media(min-width:900px){.lore{grid-template-columns:1.2fr 1fr;gap:2.6rem;align-items:start}}
+.lore p:first-of-type::first-letter{float:left;font-size:3.4rem;line-height:.85;padding:.1rem .5rem .1rem 0;color:var(--gold)}
+.scroll{border:1px solid var(--line);background:var(--panel);padding:1.4rem}
+.scroll h3{color:var(--gold);letter-spacing:.16em;text-transform:uppercase;font-size:.85rem;border-bottom:1px dashed var(--line);padding-bottom:.7rem}
+.scroll ol{margin:.8rem 0 0;padding-left:1.2rem;color:var(--mut);font-size:.95rem}
+.scroll li{margin-bottom:.55rem}
+.scroll li b{color:var(--parch);font-weight:400}
+
+/* quest board */
+.board{display:grid;gap:1.1rem}
+@media(min-width:860px){.board{grid-template-columns:repeat(3,1fr)}}
+.note{background:linear-gradient(175deg,#181207,#120e08);border:1px solid var(--line);padding:1.4rem 1.3rem;position:relative;
+  box-shadow:0 24px 50px -30px rgba(0,0,0,.9);transition:transform .2s}
+.note:nth-child(1){transform:rotate(-.7deg)} .note:nth-child(2){transform:rotate(.5deg)} .note:nth-child(3){transform:rotate(-.4deg)}
+.note:hover{transform:rotate(0) translateY(-4px);border-color:var(--gold-dim)}
+.note::before{content:"";position:absolute;top:-7px;left:50%;transform:translateX(-50%);width:14px;height:14px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#f0d9a8,var(--gold) 55%,#7a5a26);box-shadow:0 4px 8px rgba(0,0,0,.7)}
+.note .k{font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-dim);text-align:center;display:block;margin-bottom:.7rem}
+.note p{color:var(--mut);font-size:.94rem;margin:.4rem 0 0}
+
+/* path */
+.path{display:grid;gap:1rem}
+@media(min-width:900px){.path{grid-template-columns:repeat(3,1fr)}}
+.tier{border:1px solid var(--line);background:var(--panel);padding:1.5rem 1.3rem;text-align:center;position:relative}
+.tier .num{font-size:.72rem;letter-spacing:.3em;color:var(--gold-dim)}
+.tier h3{font-size:1.3rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin:.7rem 0 .5rem}
+.tier p{color:var(--mut);font-size:.93rem;margin:0}
+.tier .glyph{font-size:1.7rem;margin-bottom:.4rem}
+.tier:nth-child(3){border-color:rgba(163,230,53,.35);box-shadow:0 0 40px -22px rgba(163,230,53,.7)}
+.tier:nth-child(3) h3{color:var(--lm)}
+
+/* status */
+.tablewrap{border:1px solid var(--line);background:rgba(0,0,0,.35);overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.93rem;min-width:520px}
+th,td{border-bottom:1px solid var(--line);padding:.8rem 1rem;text-align:left}
+th{font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-dim);font-weight:400}
+td{color:var(--mut)} td b{color:var(--parch);font-weight:400}
+tr:last-child td{border-bottom:0}
+.sig{display:inline-block;border:1px solid var(--gold-dim);color:var(--gold);font-size:.7rem;letter-spacing:.16em;padding:.15rem .55rem;text-transform:uppercase}
+.sig.dev{border-color:rgba(163,230,53,.4);color:var(--lm)}
+
+/* band */
+.band{border:1px solid var(--line);background:linear-gradient(180deg,rgba(212,162,76,.1),rgba(11,9,7,.6));padding:clamp(1.6rem,4vw,2.6rem);text-align:center}
+.band p{color:var(--mut);max-width:38rem;margin:0 auto}
+.disclaimer{border-left:2px solid var(--blood);background:rgba(180,70,47,.07);padding:.9rem 1.1rem;color:var(--mut);font-size:.86rem;margin-top:1.6rem}
+
+footer{border-top:1px solid var(--line);padding:1.8rem 0 2.6rem;color:var(--gold-dim);font-size:.85rem}
+.f-row{display:flex;flex-direction:column;gap:.8rem;text-align:center}
+@media(min-width:760px){.f-row{flex-direction:row;justify-content:space-between;align-items:center;text-align:left}}
+.f-links{display:flex;gap:1.2rem;flex-wrap:wrap;justify-content:center}
+.f-links a{color:var(--mut);text-decoration:none}
+.f-links a:hover{color:var(--gold)}
+</style>
+</head>
+<body>
+<a class="skip" href="#world">К миру игры</a>
+
+<header>
+  <div class="wrap">
+    <nav class="nav" aria-label="Навигация Tavernkeep">
+      <a class="brand" href="/">
+        <span class="mark" aria-hidden="true">🍺</span>
+        <span><b>Tavernkeep</b><small>EnCore · dark fantasy</small></span>
+      </a>
+      <div class="links">
+        <a href="#world">Мир</a>
+        <a href="#mechanics">Механики</a>
+        <a href="#path">Путь</a>
+        <a href="#status">Статус</a>
+        <a class="btn btn-p btn-sm" href="#join">В титры</a>
+      </div>
+      <button class="burger" id="burger" aria-expanded="false" aria-controls="mmenu" aria-label="Открыть меню">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="20" height="20"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </nav>
+    <div class="mmenu" id="mmenu">
+      <a href="#world">Мир</a>
+      <a href="#mechanics">Механики</a>
+      <a href="#path">Путь</a>
+      <a href="#status">Статус</a>
+      <a href="#join">В титры</a>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="crest" aria-hidden="true"><span>🍺</span></div>
+    <span class="label">Концепт · PC + Mobile</span>
+    <h1>Tavernkeep</h1>
+    <div class="center mut" style="letter-spacing:.36em;font-size:.8rem;text-transform:uppercase">симулятор хозяина таверны</div>
+    <div class="hero-frame">
+      <p class="center" style="max-width:44rem;margin:0 auto;font-size:1.06rem">Зажгите очаг, налейте эля усталому охотнику и поведайте ему, что за стенами бродят твари. <b style="color:var(--gold);font-weight:400">Одна придорожная корчма</b> — и путь, который ведёт от неё <b style="color:var(--lm);font-weight:400">до целого города</b>.</p>
+      <div class="cta">
+        <a class="btn btn-p" href="#join">Поддержать разработку</a>
+        <a class="btn" href="#mechanics">Что в игре</a>
+      </div>
+      <div class="ornament">❦ ❦ ❦</div>
+    </div>
+  </div>
+</section>
+
+<!-- WORLD -->
+<section id="world">
+  <div class="wrap">
+    <span class="label">Пролог</span>
+    <h2>Мир тёмного фэнтези</h2>
+    <div class="rule">❦</div>
+    <div class="lore">
+      <div>
+        <p>Дороги небезопасны, города закрыты стенами, а между ними — таверны, где огонь горит до утра. Вы — хозяин одной такой корчмы: принимаете дорогих гостей, варите эль, нанимаете стражу и решаете, кому доверять.</p>
+        <p>Каждый гость — история: наёмник с заказом, беглый монах, купец с редким товаром. Помогите одному — получите врага у другого. Репутация таверны копится медленно и тратится мгновенно.</p>
+        <p class="mut">Мир оригинальный: свои монстры, свои легенды, своя цена за каждую кружку эля.</p>
+      </div>
+      <aside class="scroll">
+        <h3>Записи хозяина</h3>
+        <ol>
+          <li><b>Очаг</b> — тепло, еда и свет решают, кто останется до утра.</li>
+          <li><b>Поговор</b> — слухи из зала становятся картой поблизости.</li>
+          <li><b>Сделки</b> — снаряжение, зелья и редкий лут с путешественников.</li>
+          <li><b>Опасность</b> — ночью к воротам стучится не только дождь.</li>
+        </ol>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- MECHANICS -->
+<section id="mechanics">
+  <div class="wrap">
+    <span class="label">Механики</span>
+    <h2>Доска объявлений</h2>
+    <p class="sub">Три столпа, на которых держится хозяйство.</p>
+    <div class="board">
+      <div class="note"><span class="k">хозяйство</span><h3>Таверна живёт</h3><p>Рецепты, запасы, персонал и атмосфера. Гости оценивают еду, service и слухи — и возвращаются или уходят к соседям.</p></div>
+      <div class="note"><span class="k">люди и репутация</span><h3>Каждый выбор важен</h3><p>Фракции, квесты и моральные развилки. Помощь одним меняет отношение других — репутация общая для региона.</p></div>
+      <div class="note"><span class="k">опасность</span><h3>Ночь не спит</h3><p>Монстры, разбойники и чума. Стража, укрепления и союзы решают, доживёт ли таверна до рассвета.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PATH -->
+<section id="path">
+  <div class="wrap">
+    <span class="label">Прогрессия</span>
+    <h2>От корчмы к городу</h2>
+    <div class="rule">✦ ❦ ✦</div>
+    <div class="path">
+      <div class="tier"><div class="glyph">🕯</div><span class="num">ФАЗА I</span><h3>Таверна</h3><p>Придорожная корчма, три комнаты, верный повар и первый долг на барной стойке.</p></div>
+      <div class="tier"><div class="glyph">🏘</div><span class="num">ФАЗА II</span><h3>Квартал</h3><p>Склад, кузница, стражня. Вы управляете улицей: арендаторы, рынок, безопасность.</p></div>
+      <div class="tier"><div class="glyph">🏰</div><span class="num">ФАЗА III</span><h3>Город</h3><p>Экономика, совет гильдий и осады. Таверна становится штабом целого города.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATUS -->
+<section id="status">
+  <div class="wrap">
+    <span class="label">Статус</span>
+    <h2>Свиток разработки</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Глава</th><th>Содержание</th><th>Статус</th></tr></thead>
+        <tbody>
+          <tr><td><b>Концепция</b></td><td>Мир, тон, цикл игрока, документ дизайна</td><td><span class="sig">Готово</span></td></tr>
+          <tr><td><b>Прототип</b></td><td>Вертикальный срез: таверна, гости, ночь</td><td><span class="sig dev">В работе</span></td></tr>
+          <tr><td><b>Экономика</b></td><td>Ресурсы, цены, фракции, репутация</td><td><span class="sig">В очереди</span></td></tr>
+          <tr><td><b>Градостроительство</b></td><td>Кварталы, стройка, совет города</td><td><span class="sig">В очереди</span></td></tr>
+          <tr><td><b>Сборка PC / Mobile</b></td><td>Порт, производительность, сохранения</td><td><span class="sig">В очереди</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="disclaimer">* Tavernkeep — оригинальная вселенная EnCore, вдохновлённая эстетикой тёмного фэнтези. Не является официальным продуктом по мотивам существующих IP и не аффилирована с правообладателями.</div>
+  </div>
+</section>
+
+<!-- JOIN -->
+<section id="join">
+  <div class="wrap">
+    <div class="band">
+      <span class="label">Приглашение</span>
+      <h2>Стать частью истории</h2>
+      <p>Игра в стадии концепта — раннее участие решает, в какую сторону пойдёт мир. Поддержка проекта и обратная связь идут через страницу плагина студии.</p>
+      <div class="cta">
+        <a class="btn btn-p" href="/auto-proxy-per-site/#support">Поддержать разработку</a>
+        <a class="btn" href="/">О студии EnCore</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap f-row">
+    <span>© <span id="year">2026</span> EnCore · Tavernkeep</span>
+    <span class="f-links">
+      <a href="/">Студия</a>
+      <a href="/auto-proxy-per-site/">Auto Proxy Per Site</a>
+      <a href="/shiftex/">Shiftex</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+const burger = document.getElementById('burger'), mmenu = document.getElementById('mmenu');
+burger.addEventListener('click', () => {
+  const open = mmenu.classList.toggle('open');
+  burger.setAttribute('aria-expanded', open);
+});
+mmenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  mmenu.classList.remove('open'); burger.setAttribute('aria-expanded', 'false');
+}));
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
