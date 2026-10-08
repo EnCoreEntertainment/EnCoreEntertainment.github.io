@@ -22,7 +22,7 @@
   var CONFIG = {
     card:   "#", // например: "https://pay.cloudtips.ru/p/xxxx"
     github: "#", // например: "https://github.com/sponsors/yourname"
-    crypto: "0x0000…замените-адрес-в-CONFIG…0000"
+    crypto: "TLtYU2RcRAZGHE1YfdLuPDSMjqRudZNdQ2" // USDT · сеть TRC20 (TRON)
   };
 
   /* ===== стили блока (живут только внутри .enc-support) ===== */
@@ -58,7 +58,7 @@
 .enc-support .crypto{border:1px dashed rgba(163,230,53,.45);border-radius:6px;padding:1rem;margin-top:.9rem;background:rgba(0,0,0,.35)}
 .enc-support .addr{display:flex;flex-direction:column;gap:.5rem;margin-top:.6rem}
 @media(min-width:560px){.enc-support .addr{flex-direction:row}}
-.enc-support .addr code{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;background:#020617;border:1px solid var(--line2);border-radius:4px;padding:.65rem .75rem;font-size:.78rem;color:var(--lm)}
+.enc-support .addr code{flex:1;word-break:break-all;background:#020617;border:1px solid var(--line2);border-radius:4px;padding:.65rem .75rem;font-size:.78rem;color:var(--lm)}
 .enc-support .copy{border:1px solid rgba(163,230,53,.5);background:rgba(163,230,53,.12);color:var(--lm);border-radius:4px;padding:.65rem 1rem;font-family:var(--font);font-weight:700;cursor:pointer;min-height:42px}
 .enc-support #copyMsg{min-height:1.3em;color:var(--lm);font-size:.82rem;margin:.5rem 0 0}
 `;
@@ -86,10 +86,10 @@
       </div>
 
       <div class="crypto">
-        <b>🪙 Крипта — без комиссий платформ</b>
-        <div class="small mut">Нажмите «Копировать» — адрес берётся из CONFIG в файле support.js.</div>
+        <b>🪙 USDT · сеть TRC20 (TRON)</b>
+        <div class="small mut">Отправляйте только USDT в сети TRC20 — в другой сети средства не придут. Нажмите «Копировать», чтобы не ошибиться.</div>
         <div class="addr">
-          <code id="cryptoAddr">0x0000…замените-адрес-в-CONFIG…0000</code>
+          <code id="cryptoAddr">TLtYU2RcRAZGHE1YfdLuPDSMjqRudZNdQ2</code>
           <button class="copy" id="copyBtn" type="button">Копировать</button>
         </div>
         <p id="copyMsg" role="status" aria-live="polite"></p>
@@ -135,7 +135,7 @@
 
     btn.addEventListener('click', function () {
       var done = function () { msg.textContent = '✓ Адрес скопирован. Спасибо за поддержку!'; };
-      var fail = function () { msg.textContent = 'Адрес: ' + CONFIG.crypto; };
+      var fail = function () { msg.textContent = 'USDT · TRC20: ' + CONFIG.crypto; };
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(CONFIG.crypto).then(done, fail);
       } else {
