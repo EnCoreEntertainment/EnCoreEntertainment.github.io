@@ -157,7 +157,10 @@
     try { id = decodeURIComponent(location.hash.slice(1)); } catch (e) { return false; }
     var el = id ? document.getElementById(id) : null;
     if (!el || !el.scrollIntoView) return false;
-    el.scrollIntoView({ block: 'start' });
+    // behavior:'instant' — явно, а не через наследуемое scroll-behavior:smooth
+    // со страницы: анимация не запускается на скрытых документах, из-за чего
+    // якорь молча не срабатывает. Мгновенная прокрутка доводит до цели всегда.
+    el.scrollIntoView({ block: 'start', behavior: 'instant' });
     lastY = window.pageYOffset;
     return true;
   }
