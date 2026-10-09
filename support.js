@@ -145,7 +145,32 @@
     });
   }
 
-  if (!render()) {
-    document.addEventListener('DOMContentLoaded', render);
+  // Якорь #support появляется на странице только после этой инъекции, поэтому
+  // стандартная прокрутка браузера к фрагменту уже выполнена — и не нашла
+  // цели. Повторяем её сами. lastY не даёт утащить прокрутку, если посетитель
+  // к моменту load уже сам куда-то переместился.
+  var lastY = null;
+
+  function scrollToHash() {
+    if (!location.hash || location.hash.length < 2) return false;
+    var id;
+    try { id = decodeURIComponent(location.hash.slice(1)); } catch (e) { return false; }
+    var el = id ? document.getElementById(id) : null;
+    if (!el || !el.scrollIntoView) return false;
+    el.scrollIntoView({ block: 'start' });
+    lastY = window.pageYOffset;
+    return true;
   }
+
+  if (render()) {
+    scrollToHash();
+  } else {
+    document.addEventListener('DOMContentLoaded', function () {
+      if (render()) scrollToHash();
+    });
+  }
+
+  window.addEventListener('load', function () {
+    if (lastY === null || window.pageYOffset === lastY) scrollToHash();
+  });
 })();
