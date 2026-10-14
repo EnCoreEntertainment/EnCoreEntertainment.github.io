@@ -198,6 +198,21 @@ footer{border-top:1px solid var(--line);padding:1.6rem 0 2.4rem;color:#4d6577;fo
   .sup-addr code{flex:1 0 100%}
   .sup-copy{flex:1 1 auto}
 }
+.lang{
+  display:inline-flex;align-items:center;gap:.1rem;flex:none;
+  border:1px solid var(--line);border-radius:999px;padding:2px;
+}
+.lang button{
+  border:0;background:transparent;cursor:pointer;
+  font-family:var(--mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--mut);padding:.5rem .72rem;min-height:34px;border-radius:999px;
+  transition:color .3s var(--ease),background .3s var(--ease);
+}
+.lang button:hover{color:var(--cy)}
+.lang button[aria-pressed="true"]{color:#04060b;background:var(--cy);font-weight:700}
+.lang button[aria-pressed="true"]:hover{color:#04060b}
+.lang .sep{width:1px;height:13px;background:var(--line);flex:none}
+@media(max-width:620px){.lang button{min-height:40px;padding-inline:.6rem}}
 </style>
 </head>
 <body>
@@ -214,6 +229,11 @@ footer{border-top:1px solid var(--line);padding:1.6rem 0 2.4rem;color:#4d6577;fo
         <a href="#support">Поддержать</a>
         <a href="#faq">FAQ</a>
         <a class="btn btn-p" href="#support">❤ Поддержать</a>
+      </div>
+      <div class="lang" role="group" aria-label="Language switcher">
+        <button type="button" data-lang="ru" aria-pressed="true">RU</button>
+        <span class="sep" aria-hidden="true"></span>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
       </div>
       <button class="burger" id="burger" aria-expanded="false" aria-controls="mmenu" aria-label="Открыть меню">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="20" height="20"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
@@ -234,14 +254,14 @@ footer{border-top:1px solid var(--line);padding:1.6rem 0 2.4rem;color:#4d6577;fo
 <section>
   <div class="wrap hero-grid">
     <div>
-      <span class="tag">● released · v1.0 · chrome mv3</span>
+      <span class="tag">● released · chrome mv3</span>
       <h1>Auto Proxy</h1>
       <p class="lead">Расширение, которое подбирает лучший прокси под каждый сайт: собирает пул, тестирует, ранжирует и мгновенно переключается. Вся логика — локально в вашем браузере, без внешних серверов.</p>
       <div class="cta">
         <a class="btn btn-p" href="#support">❤ Поддержать проект</a>
       </div>
       <div class="grid c3" style="margin-top:1.6rem">
-        <div class="card"><div class="k">[ СТАТУС ]</div><p class="ok" style="margin:0">v1.0 в релизе</p></div>
+        <div class="card"><div class="k">[ СТАТУС ]</div><p class="ok" style="margin:0">в релизе</p></div>
         <div class="card"><div class="k">[ ЛИЦЕНЗИЯ ]</div><p class="cy" style="margin:0">бесплатно</p></div>
         <div class="card"><div class="k">[ ДАННЫЕ ]</div><p class="vi" style="margin:0">0 внешних запросов*</p></div>
       </div>
@@ -350,9 +370,7 @@ footer{border-top:1px solid var(--line);padding:1.6rem 0 2.4rem;color:#4d6577;fo
           </svg>
         </button>
           <div class="sup-qrbox" id="qrBox" hidden>
-        <img class="sup-qr" src="
-data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAAUAAD/4QMvaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjYtYzEzOCA3OS4xNTk4MjQsIDIwMTYvMDkvMTQtMDE6MDk6MDEgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDQyAyMDE3IChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDoxNEUyMzFFOEMzMzkxMUYxQjFBOUVBMDY5NDUyMDk2MCIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDoxNEUyMzFFOUMzMzkxMUYxQjFBOUVBMDY5NDUyMDk2MCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjE0RTIzMUU2QzMzOTExRjFCMUE5RUEwNjk0NTIwOTYwIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjE0RTIzMUU3QzMzOTExRjFCMUE5RUEwNjk0NTIwOTYwIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+/+4ADkFkb2JlAGTAAAAAAf/bAIQAEg4ODhAOFRAQFR4UERQeIxoVFRojIhkZGhkZIiceIyEhIx4nJy4wMzAuJz4+QUE+PkFBQUFBQUFBQUFBQUFBQQEUFBQWGRYbFxcbGhYaFhohGh0dGiExISEkISExPi0nJycnLT44OzMzMzs4QUE+PkFBQUFBQUFBQUFBQUFBQUFB/8AAEQgBQgDlAwEiAAIRAQMRAf/EALQAAQADAQEBAQAAAAAAAAAAAAAEBQYHAwIBAQEBAQEBAQAAAAAAAAAAAAAAAQIDBAUQAAECBQEDBQkJDQUFCQEAAAIBAwAREgQFEzEUBiEiUhUWQVFCg6OzVHQ1YTKS0iNT0yQ2cYGhsdFic8PjRGQHF5FyM0MmwZOkJWXw4YKyYzTEhUZFEQEAAgEBBQQLAAMAAAAAAAAAARECMSFRYRIDQZGhIvBxgcHR4TJCUnITsfGS/9oADAMBAAIRAxEAPwDcQhCAQhCAQhCAQhCAQhCAQhCAQhCAQhCAQhCAQhCAQhCAQhCAQhCAQhCAQhCAQhCAQhCAQhCAQhCAQhCAjZF1xjH3LzS0uNtOGBSRZEIqqLyxDwN5cXeFYurg63zE1I5IM6SJE5BRE7kTr1hbizftx5CdbME+6YqkZLFcQ2mLxPV14Djd9b1gjFCqpkRKqUqnJ3fyTiTplvqK8V/H1zb8DiPJDgWHydFbq5uCY3hwRQGg6SoKInJFra9oWLthSuAyli9yOuCLbKs/nJSvOT+37iRVMM3OO4bthu7JLm3ccI7tokVXGmyXkJE7iy/siMwOMXL2RcMq6hKab2KamkLM0nXqcv8As+/GvurjEeDPZfrnxWLD3EOQyWQZtb8bdq0doASabPkVSly0z7ke1vkM1cOv4d50LXJsoLjdyAIbbrXJNaS5J8v/AHJKIFhm7DF5jLpeEQq6/MKRUp0qU9n3Yn4cLjI5t7NmybFtpIzbi4lJmnJzpd78sSOzdyxfd8VnWf22d6JanxPc5K7sEyYiVpSqmrDSoVaT2UxsG0NGxQyqNERCKUplLlWUZzEfajMfca/8qRpYR9OPGLPuy4TRCEIBCEIBCEIBCEIBCEIBCEIBCEIBCEIBCCqiJNdkR2761cc0wcRSXZtksu8uxYkzETETMReixEzcxEzWqRCEIqEIQgEIQgEIQgEIQgEIR8Oug0Cm4shTaslX8UJmI2yRF7IfcIijkbMkVRc5BRVVaS5ETb3I+2by2eKls5kiTkqKKy/8SJGYzwnTLGb4tThnGuOUVwe8IjhfWhuaYuIpKsk2yVfcXYsfpXlsLmkTiIc5Ltkir3FXZDnx/KN2pyZacuW/R7wjxO7tgc0iNEPkRU5ZIq7EVdiR7RYmJ0m6SYmNYqyEIRUIQhAIQhAIQhAIQhAeF6BnaOg379RWSJ3fciOl1Zuiy0I6hooybRJK2o91e9KJ8IxOM81xOtRNxejcZREVMaTcVNKVty4J0UJyTyuSIK3KqZ7NNEpRJd38MergUJeqJufJCmnMzWVQT7qxawjH8fLXNc764U3/AF23GNcL42hWl0brqtqQOigIWo3OSLspLlLliJd3DKuXU3lEwFEaRDIeeiLPkRYuI+RbAEJBSSEqkv3S2xc8MsseXmjt2zG/RMc8YynLl3aSp3n3SM11UFKRVlVMxmijtERTncsfbiOE1dOmZo43KmkiFEWgV2Iqd2LVtsGwEASQikkT3I+on8pm7y+q+zS1/rEVWOirfcFHH0edMDQU3cRIhnzdoonvlqjzuHSQEVXCG5kFQKZCqKqJ/hgnIU/di4hFnpzN+bXh6bSOrEV5dOKmeeuSaukAiEW3CUjny7UkA/7YlE0m/oNR0q2rlNZyqqTuT/BE+EI6WlzdVrwSeruitdOKlZuV1mS1FQTUkcRXCMkmiyQkkgis9kotmFBWQUDVwZJIy98Sd9Y9IRcMJx1m/ZSZ5xlpHL7bVX/8y6/vu/8Amj5dC4ccRt1Rr0T3ehFFCIhkqLNV5ZRbwjM9G4iJn7ccf+b+LUdWrmu2Z71cNzaGw0wg1mlKaKIqEBD3V70o83ri1MztRIWm66njVeUinNUFPupti1hGpwynWcePl1jdqkdTGJust/1du/RUuGAsXVuX+O4Z0B4R1rzVSLUUVBRF2y5Y/YRcMeXtvZGPshnLPmrZW2+8hCEbYIQhAIQhAIQhAIQhAIQhAIQhAIQhAIQhAIQhAIQhAIQhAIQhAIQhAIQhAIQhAIQhAIQhAIQhAR72/tLBhbi7PTaRUFSkRcpbOQUVYq+1/Dvpfk3viR4cbewj/SB+OMbw9w911vH1jQ0KPA1KtSr84ZSpgNz2v4d9L8m98SHa/h30vyb3xIo/6e/x/kf2sP6e/wAf5H9rAXna/h30vyb3xIdr+HfS/JvfEij/AKe/x/kf2sZvPYbqe8C21tettHK6dOVREMpVF0YDrLLzb7Lb7S1NOihgUlSYmk0WS8uyPuIOG9j2PqzPmxjwz2Z6nswudHXrcRuirTlUJFOdJdGA98jl8djNPfXdLVq0+aZzolP3gl0kj3s7y3vbcLm2PUZcnQclGdKqK8hIi7UjmPEPEPXW7/V9DQr8PUq1KfzRlKmNzwh9nbTxnnjgLW8vLeytzubk9NluVZyUpVKgpyCirtWPDHZfHZPU3J3V0qdTmmEq5y9+I9FYw+X4y6zxztluelq0/KatcqDE9mmPR78QOHuIepd4+r6+vR4enTp1fmlOdUB1WKrtHht83LePrOpo6dDn+LVRTOiW33ZRnP6hfwHlv2Ue9lwtvV4xnN6o13Avd306qdQke066078py92UBsYQhAI8Ly8t7K3O5uT02W5VnJSlUqCnIKKu1Y94o+L/ALO3fi/PBAO1/Dvpfk3viQ7X8O+l+Te+JGG4e4e663j6xoaFHgalWpV+cMpUxe/09/j/ACP7WAvO1/Dvpfk3viQ7X8O+l+Te+JFH/T3+P8j+1h/T3+P8j+1gLztfw76X5N74kXLLzb7Lb7S1NOihgUlSYmk0WS8uyOTZ7DdT3gW2tr1to5XTpyqIhlKoujHTsN7HsfVmfNjAToQhAIQhAIQhAZzjb2Ef6QPxxVfy9/f/ABP62LXjb2Ef6QPxxVfy9/f/ABP62A8OI+I8zZZm4tra402W6KAobKVTYEvKQKu1Yqe1/EXpfk2fiQ4v+0V34vzIRRwG84RzuVyOScYvH9VoWSNBobDnIYJOYCi7Fiu499sM+rD5xyHAXth71YvONw499sM+rD5xyA3GG9j2PqzPmxij499js+sj5tyLzDex7H1ZnzYxR8e+x2fWR825AUfBuIx2T3zfWtXS0tPnGEq9SfvCHopDL5fI4XIu4zGO6FkxTpNUg5TqALhc5wSJZkSryrFFjsRkcnqbk1q6VOpzgCVc5e/IeiseF5Z3FlcHbXIabzcqwmhSqRCTlFVTYsB4Rq+DcRjsnvm+taulpafOMJV6k/eEPRSLXiPiPDXuGuLa2uNR5yigKHBnS4BLykCJsSOfwHVeyHDvonlHvjxjr3iPM2N4/ZWtxp21q4bLDdDZUNNEoAMyBVWSJ3VnFbYYLK5FlX7NjVaElBSrbDnIiLKRki7FjYvZ3FMYFzFuv03zVotsbVDiyfBrTUKkGn33JOcvdgPDhHO5XI5Jxi8f1WhZI0GhsOchgk5gKLsWNrHDoQGy4j4jzNlmbi2trjTZbooChspVNgS8pAq7VjR8X/Z278X54IcIfZ208Z544cX/AGdu/F+eCAo/5e/v/if1seHEfEeZsszcW1tcabLdFAUNlKpsCXlIFXase/8AL39/8T+tii4v+0V34vzIQDtfxF6X5Nn4kaDhHO5XI5Jxi8f1WhZI0GhsOchgk5gKLsWMHGr4C9sPerF5xuAce+2GfVh845G4w3sex9WZ82MYfj32wz6sPnHI3GG9j2PqzPmxgJ0IQgEIQgEIQgM5xt7CP9IH44qv5e/v/if1sWvG3sI/0gfjjDYbPXmH1t2Bs9emvUQilp1SlSQ9KA0+d4RyWRyr94w4yLTtFKGRoXMbEFnIFTakV3YLMfPW3wnPo4dvcx8zbfBc+kh29zHzNt8Fz6SAuuGeGb/E37lzcuNGBtK2iNqalUpgXhAPRil499sM+rD5xyHb3MfM23wXPpIpMvl7nLXI3NyIAYAjaI2hINKEReERdKA6dj7gLbh62uXEVQZs23CQffKIMoSynLvRjeJuJrDLWDdtbNugYOo4quICDSgGPgmXSjU//j//AK7/AOPGF4ZxFtlr9y2uSMABpXEVtRQqkMB8IS6UBJ4Wz1nh963kHD19OjTQSlp1znUQ9KJ15gbziK4PM2Rtt211LTB5SF1NJEaWpAE02gvd2RB4pwNnh913Y3D19SvUUSlp0SlSI9KNjwh9nbTxnnjgMVkuEcljrJy8fcZJpqmpAI1LnkgJKYIm1Yz8bKzz15xFcBhr0G27a6nqGyhC6mkiupSpkabQTubIg8U4Gzw+67sbh6+pXqKJS06JSpEelAaPgL2O96yXm24q8hwVlbm/ublt1hAedccFCJypBM1JJybXvxacBex3vWS823ETtdkuvurtNnR3vd6qTro1dOc65Tl7kBnsvwzf4m2G5uXGjAzRtEbU1KpRIvCAejFJHR+PfY7PrI+bcik4Z4ZsMtYOXNy46Bg6raI2oINKABeEBdKAk4Li7G47FMWb7bxOtV1KAgo89wjSUzRdixoOL/s7d+L88Ec8ztgzjsq/ZsKRNNUUqaopc9sTWckRNqx0Pi/7O3fi/PBAUf8AL39/8T+tj7zvCOSyOVfvGHGRadopQyNC5jYgs5AqbUjMYbPXmH1t2Bs9emvUQilp1SlSQ9KLbt7mPmbb4Ln0kA7BZj562+E59HF1wzwzf4m/cublxowNpW0RtTUqlMC8IB6MUvb3MfM23wXPpIdvcx8zbfBc+kgHHvthn1YfOORuMN7HsfVmfNjHLMvl7nLXI3NyIAYAjaI2hINKEReERdKOp4b2PY+rM+bGAnQhCAQhCAQhCAj3u4aC7/pbvNJ69GnV3Pf8kQrey4buqt2Ysn6JV6YMuU1bJ0oveiDxt7CP9IH44qv5e/v/AIn9bAarqbD+g23+5b+LEVlnhV9xGmG7B10p0gCMGSySayROXZHhkuLsbjr1yzfbeJ1qmpQEFHnihpKZouxYxPCH2itPGeZOA6FcY/h62BHLm2s2QVaUJxtkBUtspkid6I3+j/8Ap3/Dx9cTYi5y1g3bWxABg6jiq4pINKAY+CJdKMn2CzHz1t8Jz6OA3/1Pc/8AL3LT/N0NCn4NFP3pRkOJrnFW1g25hXWGbpXUEysybB1WqDVUVWVRaZonuTlHr19Z7n2coc33T6v1JDoa9O71VVVUVfmzl3O5FV2CzHz1t8Jz6OA9+Fr2zut668fbfo09330xcpqrr09ZV7yTl7k4rc7k3mMq+1i7smrEaNILZxQYSbYqVCNrT76c5d2cS+wWY+etvhOfRw7BZj562+E59HAQOEPtFaeM8ycaTjqyvLrcd2Ycfo1a9MCcpq05TpRe9Gb4Q+0Vp4zzJx0DM56zw+jvIOHr1UaaCUtOmc6iHpQFNwi8zjMa4xkXBsnieIxauFRg1BQAUJBcpWUxXl9yJuQPh5y2uXLQrM8gYOEwTSsrcFcKKqCgo86urZLln7sYribL22Wv27m2EwAGkbVHEFCqQzLwSLpRZ4bhHJa1jkdRnRqZuKajromLkpUSnL3YCouLbie5BG7lq+eBFqQXBfMULZORIvfja8FW1zbYp1u5aNk1fIkFwSAlHTbSciRO9Glily/E1hibkba5bdMzBHEVtAUaVIh8Ix6MB63nZveD33ct55NTW0dXYkqq+XZL70e++4e++q69tdan+RW27XTzveTWcpTjl2dv2cjlX7xhCFp2ilDRELmNiCzkqptSJXCH2itPGeZOA6BcWXDdrTvLFkxXOjUBluqnbKpE78ejOMwL7aOsWlo60U6TBtoxWSyWSoktsVvFOBvMxuu7G2GhqV6ikM9SiUqRLoxZYKwex2KYs31EnWq6lBVUee4RpKaIuxYD76mw/oNt/uW/iw6mw/oNt/uW/ixUXPGuKtrl22cafU2TJslEW6VICUVlNxO9EvEcTWGWuStrZt0DAFcVXEBBpQhHwTLpQEzqbD+g23+5b+LE0ABsBbbFAAEQREUkIinIiIiR+wgEIQgEIQgEIQgM5xt7CP8ASB+OKr+Xv7/4n9bFrxt7CP8ASB+OKr+Xv7/4n9bATsvwb1nkXb3fNLVp+T0q5UAIbdQej3ow2IyPVmRavdPV0qvk6qJ1gQbZF0u9HY44dAbn+oX8B5b9lD+oX8B5b9lGGja8I4LFZHGuP3jGq6LxAhVuBzUAFlICRNqwEuy4W3q8Yzm9Ua7gXu76dVOoSPaddad+U5e7KNjHMr3iPM2N4/ZWtxp21q4bLDdDZUNNEoAMyBVWSJ3VnEftfxF6X5Nn4kB1WEcq7X8Rel+TZ+JHQOHLy4vcNb3Nyeo85XWckGdLhinIKImxICqxHBvVmRavd81dKr5PSonWBBt1C6XeidxDw911u/1jQ0K/A1KtSn84ZSpi8j8IwH3xIP3VlAYj+nv8f5H9rGq9l4f57cbb+5qaDf8A4pTp92JokJcoqip7izj5eZbfZcYdSpp0VAxmqTE0kqTTl2QGK/qF/AeW/ZRm89meuLwLnR0KG0boq1J0kRTnSPSjoHZDh30Tyj3x4xXF2Nssdkm2LNvSaJkTUaiPnKZpOZqq7EgJeI4N6zxzV7vmlq1fJ6VcqDINuoPR70Tuz3Zr/ne8b1uv+RRo163yPv6jlKueyLzhD7O2njPPHGVxGXyOayLWMybuvZP1arVIN1aYE4PObESSRCi8iwE7+oX8B5b9lGqxGR6zxzV7p6WrV8nVXKgyDbIej3ow/GWIx2M3PcmtLV1dTnGc6NOXvyLpLGq4Q+ztp4zzxwFHmeDf/fZPfPnrnS0v7zlNWp96cvvRm8Dmep7w7nR1621boq05VEJTnSXRjp2Z9j33qz3myjjkB1zA5nrizO50dChxW6KtSdIiU50j0otYyvAXsd71kvNtxqoBCEIBCEIBCEIBCEIDAcR8OZm9zNxc21vqMuUUHW2M6WwFeQjRdqRRcOXlvZZm3ubk9Nluus5KUqmzFOQUVdqxssvxl1ZkXbLc9XSp+U1aJ1gJ7NMul34w2Ix3WeRastTS1avlKa5UAR7Jj0e/AdSsM7isi8rFm/quiKmo0OBzUVEnMxRNqxm+LsFlcjkm37NjVaFkQUq2w5yGaykZIuxYssDwt1PeHc71r1tq3Rp6cqiEpzrLowz3FPU94FtuuvW2jleppyqIhlKgujAXOMZcYxtow6lLrTLYGM0WRACIqTTk2xKjHWXHW9XjFtuNGu4DderVTqEgzlpp342MAhFHxDxD1Lu/1fX16/D06dOn80pzqiZi8n1hi28hp6VaGunVXLTIh2yHo96Ai5bLGye62vK8vIRbaZ9xPdikOwyrhKTjTpKu1VmsWWCtUuLhy+dWpUJaU/PLlVViRkbi7HVdtnXaA5KUbTTRU5q84uXbHWJqaiuMy8GWM9TH+mc5VM+XHH8d6natMuwVbTboKnLNJxf4nK74KtOogvgnLLwk78fmOduKwW5dcXUHmgbaCNS87kIfc78QL5hLHLM3DXILpTUU7iqsi/tnCfNsnXsXCJ6URnjOXLzVljlx7V1f5KyxzKP3jmk0RICFSR85UVZSBFXYkVva/h30vyb3xIg8e+x2fWR825GcwPC3XFmdzvWhQ4rdGnqTpESnOselHJ7mx7X8O+l+Te+JHKo3P9Pf4/yP7WMNAbn+Xv7/AOJ/Wx4cR8OZm9zNxc21vqMuUUHW2M6WwFeQjRdqRU8PcQ9S7x9X19ejw9OnTq/NKc6o6PiMj1njmr3T0tWr5OquVBkG2Q9HvQHI9zuN83Kj6zqaOnNP8Wqimc5bfdlFr2Q4i9E8oz8eH/7D/wCx/wDkR0DPZnqezC50detxG6KtOVQkU50l0YDn/ZDiL0TyjPx46XjGXGMbaMOpS60y2BjNFkQAiKk05NsZH+oX8B5b9lGxsrjerNi5po12wconVTqChSnyd+A94QhAIQhAIQhAVPEWTfxeNK7txAnEMRk4iqMi/uqMQuFs9eZjet5BsNDTo00IZ6lc51EXRj04vt37jDE3btm85qAtDYqZSRe8MVvAtleWu/byw4xXpUagE3VTqTlUid+AsslwjjcjeuXj7jwuu01IBAg8wUBJTBV2JHOMbfvY69bvGEEnWqqUNFUeeKgs5Ki7FjT8R9pOubjct93bmaejraX+GE6aOTbP78a57GYFhtXX7S0aaGVRm20ApNZJNVSW2AxXb3MfM23wXPpIsbCwZ4tZXI5FSaeaJbcRt1QAoBEcRVRxHFnNxe7H5xNbYq5sG28K0w9dI6hGNmLZuo1QaKqoyirTNU9ycozdvbcT2wK3bNXzIKtSi2L4CpbJyFE70BrHuEcbjGXMiw48T1kK3DQmQKCmwmoKEggKymPLypH1wzxNf5a/ctrltoABpXEVtDQqkMB8Iy6UZ6y7Sb4xv2+7lqBvOvraGhUmpq182imdU+SW2Lfia5xVtYNuYV1hm6V1BMrMmwdVqg1VFVlUWmaJ7k5QHz/ML9w8d+qi74TFC4bthXYSOp/a65FJwb/zTfOs/r2jpaW8/L6depVTqVSnSk5d5I2rLLLDaNMNi00M6QBEAUms1kicm2AxrNxc428NB5FElEwXYSJF+QW+Sszds5BcF3ZqCiU+WqmP3K4hLz5VpUF9Ely7CT3YoWgyeOfrFshLYqSUgJPvbY67MtsbMnz6y6UzhlE59LLt3epevu2uLtwMxQ7qlETlUiUpcqzXYkUdsVxkMm2TiqRKSEXeER5Y+d1yV++pkBERLykSUin9saXGYwLFteWp4/fl/sSGzGN+UrEZ9bOKjk6WM36/mpOPfY7PrI+bcjJ4jia/xNsVtbNtGBmriq4hqVSiI+CY9GOmX/VuinWOjo1JTvFFFcllLU5JynFb/o//AKd/w8cnvZXt7mPmbb4Ln0kXnYLD/PXPwm/o4zGdxjz+VfdxdoTtiVGkds2psLJsUKhW0p99Ocu7OOnPPMsNq6+4LTQyqM1QBSaySarybYDmvFOBs8Puu7G4evqV6iiUtOiUqRHpR543i7JY6ybs2G2SaaqpUxNS55KazkaJtWLLjq9s7rcd2fbfo1a9Mxcpq05TpVe9GYZxmSfbR1i0edaKdJg2ZislkslRJbYCTj7g7niG2uXERDevG3CQfeoRvISynPvxs+PfY7PrI+bcj3xnZu3s7TX3Jq9abb1a9EHwfAUqqq5yGhbe7OK/jXIWFzimm7a5aeNHxJRbcAyQdNxJyFV78BW8M8M2GWsHLm5cdAwdVtEbUEGlAAvCAulHQLa3C2tmrZtVUGQFsVL3yiAoKTlLvRyWw6+0V6u3vRqWrd9WiuSTnp8k5SjquM1urbTXq1tFvVrnXXQlVVXLOe2AlQhCAQhCAQhCAhZTJsYu0W7uBMm0JBk2iKUy/vKMR8NnrPMa27A4GhTXqIIz1KpSpIujEjKYxjKWi2lwRi2pIU21RCmP95CiPhsDZ4fW3Y3D16a9RRKWnVKVIj0oCLkuLsbjr1yzfbeJ1qmpQEFHnihpKZouxYrbzPWfEVueGsgcbubqWmbyCLSaSo6tSgRrsBe5tiyyXCONyN65ePuPC67TUgECDzBQElMFXYkYnhD7RWnjPMnAanhnhm/xN+5c3LjRgbStojampVKYF4QD0YssvxNYYm5G2uW3TMwRxFbQFGlSIfCMejF1FLl+GbDLXI3Ny46BgCNojagg0oRF4QF0oCmyHGuKubC5tm2n0N5pxsVIW6UIwUUnJxe/GBiy3Bnr7q6ZaO97vVNK6NXTnOUpy9yLribhmwxNg3c2zjpmbqNqjigo0qBl4ID0YCb/AC9/f/E/rYuclxdjcdeuWb7bxOtU1KAgo88UNJTNF2LFN/L39/8AE/rYuclwjjcjeuXj7jwuu01IBAg8wUBJTBV2JAWuSv2cdZOXj6ETTVNSAiKXPJASU1RNqxEw2es8xrbsDgaFNeogjPUqlKki6MeHF/2du/F+eCKP+Xv7/wCJ/WwG4jNXPGuKtrl22cafU2TJslEW6VICUVlNxO9HhxNxNf4m/btrZtowNpHFVxDUqlMx8Ex6MRbnhmwucU7mnHHUunmCvCAVDSR021eVERQVaZr35y7sBA4m4msMtYN21s26Bg6jiq4gINKAY+CZdKK7EcM3+WtiubZxoAA1bVHFNCqQRLwQLpQ4ZxFtlr9y2uSMABpXEVtRQqkMB8IS6UdHxGItsTbFbWxGYGauKriipVKIj4Ij0YDO2ees+HbcMNeg45c2s9Q2UEml1VV1KVMgXYadzbFrxf8AZ278X54Iw3F/2iu/F+ZCNzxf9nbvxfnggOVRtcFxdjcdimLN9t4nWq6lAQUee4RpKZouxYxUbXBcI43I4pi8fceF12upAIEHmOECSmCrsSA8HuEclk3nMiw4yLN6S3DQmRoaA+uoKEggSTkXLyrFZl+Gb/E2w3Ny40YGaNojampVKJF4QD0YvLbia/tsq1hW22ltWXxsxMkPVVoHEZRVVDRKpJ3pT7kWHHvsdn1kfNuQFJwzxNYYmwctrlt0zN1XEVtAUaVAB8Ix6MdAtrgLm2auW0VAeAXBQvfIJihJOU+/HE47HhvY9j6sz5sYCdCEIBCEIBCEICl4ov7uwxJXFoem6hgKFIS5CXl5CRUiv4Ny+Rye+b67q6Wlp80AlXqT94I9FI0V7f2lgwtxdnptIqCpSIuUtnIKKsVfa/h30vyb3xIC8jitneXFlcBc2x6bzc6DkhSqRRXkJFTYsdO7X8O+l+Te+JDtfw76X5N74kBhu1/EXpfk2fiQ7X8Rel+TZ+JG57X8O+l+Te+JDtfw76X5N74kBzHfLjfN9r+s6mtqST/FqrqlKW33JRLv87lciyjF4/qtCSGg0NhzkRUnMBRdix1G9+vYd/dflN6tj0PBr1W1o99KU592OcdkOIvRPKM/HgIOOy+RxmpuTulq06nNA50Tl78S6Sx07hy8uL3DW9zcnqPOV1nJBnS4YpyCiJsSOf8AZDiL0TyjPx4qryzuLK4O2uQ03m5VhNClUiEnKKqmxYDSYjL5HNZFrGZN3Xsn6tVqkG6tMCcHnNiJJIhReRYncQ/6a3fqT6rvVev/AJ1ejTR/jVylWuyPfiPiPDXuGuLa2uNR5yigKHBnS4BLykCJsSKrg3L47Gb5vrulq6WnzTOdGpP3gl0kgLXA2dvxFZne5kN6uW3FZByatSaERNBk0oJtNe5OKrrfI9cdSav/AC3edy0KQ/8AbamjRXTX7zknOr3ZxvLDJWWRZV+zc1WhJQUqSDnIiLKRoi7Fjn+T4Wzr+Su32rWpp15wwLUaSYmaqiyU57IDc2GCxWOeV+zY0nSFQUq3D5qqiykZKm1IsY5V2Q4i9E8oz8eHZDiL0TyjPx4Bxf8AaK78X5kI8LziPM3tudtc3Goy5KsKGxnSqEnKIIu1Ig3lncWVwdtchpvNyrCaFKpEJOUVVNix2O8vLeytzubk9NluVZyUpVKgpyCirtWA4rFrZ8R5mytwtra402W50BQ2UqlUl5SBV2rHTsdl8dk9TcndXSp1OaYSrnL34j0VjnHF/wBorvxfmQgIuMecfz1o+6tTrt22ZlJEmRuoqrJOTbG1499js+sj5tyMNhvbFj6yz5wY6zf5KyxzKP3jmk0RICFSR85UVZSBFXYkBxiOx4b2PY+rM+bGPSwyVlkWVfs3NVoSUFKkg5yIiykaIuxYlQCEIQCEIQCEIQGc429hH+kD8cY3h7h7rrePrGhoUeBqValX5wylTGy429hH+kD8cVX8vf3/AMT+tgH9Pf4/yP7WH9Pf4/yP7WPvO8XZLHZV+zYbZJpqilTE1LntiazkaJtWK7t7mPmbb4Ln0kBO/p7/AB/kf2sZvPYbqe8C21tettHK6dOVREMpVF0Y2HDPE1/lr9y2uW2gAGlcRW0NCqQwHwjLpRS8e+2GfVh845AbGyuN14bYuaa9CyByidNWmyhSny96M5/UL+A8t+yjS4+3C54etrZxVQHrNtslH3yCbKCspz78Y3ibhmwxNg3c2zjpmbqNqjigo0qBl4ID0YDU8PcQ9dbx9X0NCjw9SrUq/NGUqYw3F/2iu/F+ZCPDDZ68w+tuwNnr016iEUtOqUqSHpRq7PA2fEVuGZvTcbubqeoDKiLSaSq0lKGJrsBO7tgOfxecPcPddbx9Y0NCjwNSrUq/OGUqY1fYLD/PXPwm/o4g5H/R+n1Z8tv1WrvPPp0JU06en84s5z7kBo8Dhup7M7bW163Fcrp05VCIylUXRiq7Zf8AOOrNz/ed21dX/wBTTqp0/vyn9+KPt7mPmbb4Ln0kZ/f3ususZDra28UyWiuvUlKc5T92A6jnsz1PZhc6OvW4jdFWnKoSKc6S6MMDmeuLM7nR0KHFboq1J0iJTnSPSjMWF+9xa8uOyKC0y0K3AlbooHWCo2iKriuJKTi9yNbiMRbYm2K2tiMwM1cVXFFSqURHwRHowHOeL/tFd+L8yEdHy+O6zxztlqaWrT8pTXKgxPZMej345xxf9orvxfmQif29zHzNt8Fz6SA1XD3D3Uu8fWNfXo8DTp06vzinOqMNxf8AaK78X5kIn9vcx8zbfBc+kjP5K/eyN65ePoIuu01ICKg8wUBJTVV2JAaey4W3WzYzm9V6DYXu76dNWmKPadda96U5e7KIOe4p64swtt10KHEcr1NSdIkMpUD0o3WPtwueHra2cVUB6zbbJR98gmygrKc+/FR2Cw/z1z8Jv6OAzmB4p6nsztt1163Fcr1NOVQiMpUF0Y6NZXG9WbFzTRrtg5ROqnUFClPk78cw4mxFtib9u2tiMwNpHFVxRUqlMx8ER6MdIw3sex9WZ82MBOhCEAhCEAhCEBnONvYR/pA/HFV/L39/8T+ti1429hH+kD8cVX8vf3/xP62AouL/ALRXfi/MhFHG8zvCOSyOVfvGHGRadopQyNC5jYgs5AqbUiu7BZj562+E59HAOAvbD3qxecbhx77YZ9WHzjkXXDPDN/ib9y5uXGjA2lbRG1NSqUwLwgHoxS8e+2GfVh845Aa5nW7Kt6FWtuCaVE669Dm008s57I5xf9faKdY73o1JTvGrRXJZS1OScpx1HDex7H1ZnzYxR8e+x2fWR825AUfBvU/1zrPdv8rS3nT/APUqp1PvTl7kMv1x1i71JvPVvN0Ny1N294NdGjzPfznLwp92KnDYG8zGtuxthoU16ikM9SqUqRLoxq7PPWfDtuGGvQccubWeobKCTS6qq6lKmQLsNO5tgM3/AKw/6j/xEQcj1x8n1nvPhaW86nuVU6n3py9yOxxnOKcDeZjdd2NsNDUr1FIZ6lEpUiXRgOdW+Pv7kFctrZ14EWlSbbMxQtspii9+NyYcPN8PE24NmGQCzUSEkZS4G4RmSoqLzq6vvz92LXhnEXOJsHLa5IDM3VcRW1JRpUAHwhHoxlszwjkta+yOozo1PXFNR10TJyUqJTl7sB8cBe2HvVi843G+uMhYWxo3c3LTJqlSC44AEo7JyJU70YHgL2w96sXnG4ce+2GfVh845AeHEdleX2ZuLqyYcurZyjTfZAnWjpbAVpMEVFkqKn3YvOI+zfU1xuW5bzzNPR0dX/ECdNHLsn96ImC4uxuOxTFm+28TrVdSgIKPPcI0lM0XYsYqA97eyvLqrdmHH6JV6YE5TVsnSi96N5gmcCximGso3aNXw16oXKNA+k3CUa0c53vZSn3JRQcLZ6zw+9byDh6+nRpoJS065zqIelFbnb9nI5V+8YQhadopQ0RC5jYgs5KqbUgOoBlsI2Att3lqAAiCIi60giKciIiIUU3E2QO5sG28Lcq9dI6hGNm5W6jVBoqqjKqtM1T3JyjN23BWVubZq5bdYQHgFwUInKkExQknJte/FhYWD3CTy5HIqLrLorbiNuqmdZqjiKqOI2kpNr3YCXgdz3M+0envuoun1hTr6FI007xzqKqvcnP3Y1zOjot6FOjSmlRKiiXNpp5JS2Rhr+we4teTI45RaZaFLchuFUDrBVcVURtHElJxO7G0x9udtYW1s4qKbLTbZKPvVIAQVlOXegJEIQgEIQgEIQgM5xt7CP8ASB+OMNhs9eYfW3YGz16a9RCKWnVKVJD0o6td2dteM6Ny2jrSqiqJbJpsiv7NYL0Nv8P5YDH9vcx8zbfBc+kh29zHzNt8Fz6SNh2awXobf4fyw7NYL0Nv8P5YDH9vcx8zbfBc+kiky+Xuctcjc3IgBgCNojaEg0oRF4RF0o6X2awXobf4fyw7NYL0Nv8AD+WA/La4O24YauW0RTZsRcFC96pAwhJOUu9GAy/E1/lrYba5baAANHEVtDQqkEh8Iy6UdR3Zjdt0oTd6NLT7mnTTT/ZFd2awXobf4fywHOcNnrzD627A2evTXqIRS06pSpIelGrs8DZ8RW4Zm9Nxu5up6gMqItJpKrSUoYmuwE7u2Lvs1gvQ2/w/lixtrZi1YG3twRtkJ0gmxKlqX8KwHrCEIDJ8TcTX+Jv27a2baMDaRxVcQ1KpTMfBMejFQzxdksm83jn22RZvSS3dIBNDQH10yUVIySci5ORY215iMbfOo7d24uuCNCEU50oqrLkX3Y8WuHsKy6DrdoAuNkhgSTmhCs0XbAeGI4ZsMTclc2zjpmYK2qOKCjSpCXggPRhl+GbDLXI3Ny46BgCNojagg0oRF4QF0ouoQHIM7YM47Kv2bCkTTVFKmqKXPbE1nJETasMFYM5HKsWb6kLTtdSgqIXMbI0lNFTakdPucHibp8ri4tgceOVRrOa0pSnd7yQtsHibV8bi3tgbeCdJpOaVJSvd7ywFL2Cw/wA9c/Cb+jjFZ2wZx2Vfs2FImmqKVNUUue2JrOSIm1Y6/Ffc4PE3T5XFxbA48cqjWc1pSlO73kgPC2uDtuGGrltEU2bEXBQveqQMISTlLvRgMvxNf5a2G2uW2gADRxFbQ0KpBIfCMulHUd2Y3bdKE3ejS0+5p000/wBkV3ZrBeht/h/LAVfAXsd71kvNtxqoj2djaWLStWjSNNkVaiOypURJ8v3IkQCEIQCEIQCEIQCEIQCEIQCEIQCEIQCEIQCEIQCEIQCEIQCEIQCEIQCEIQCEIQCEIQCEIQCEIQCEIQCEIQCEIKiKiovKi8ipAflQ99P7Y/ZpGRLB4lOJgtEth3dbRXFb5ZV6lNW3vRPxYCHEWVAUkIhbIKd5EbhH+b8Dfwrx/wBr9VRNsJpKfcjLWbN9dZzK210TR2xI2NwEj94bZUac15F6X4Ii2tvfXV0HD11zrTHFqPOT5X2UkrAL/by/90I21xi/iTsvh6Q2c0hFL1ReddJfpcLu6c3QrKdEp7e9X4GyXLPuR82OGvLe9uX3rknGn0JBBHDqDwQmXhLT3fBXZPbD5nyXk0hNIyN3i7ywwWSW6uFfV0ENOcUhIiRT5F28vhbV7yRCfu32bO3xF6tT7T9u5bOr/nW6lyffHZCNa/XxJ2Rf7eDdwmkp9zvxmbrIZW+Yya2qMDaWuowouIauuKA89UVFkm3k5Irsa03kHbGxvVVbK3sRfFmaiLjilTUVO2mHy7qmfcfP3R7232wmmycY7HnZllHLPB3ChZ3dsZEg1ru74rTWgnJUX/t3o+mMfZtZWyt8UincWZTyF2KrSoy5wGs1RSJe53PxN3E38GvhCEAhCEAhCEAhCEAhCEAhCEAhCEAhCEAhCEBEXHsrkkyNRawtaCDNKKKqpylOf34hXPD7L967ehd3Vs6/SjiMOC2K0DSngKsXEICtawzLV+l+D76OqIg6Ffyb2mFAk4kuVZfhj3ax7LV+/fiRK7cCAGKqlCI3yJLkn+GJcIHp3EIQgI99ZtX1o7aOqQtupSShJClt5JosRr7C2d8Nsj1SFaEJNGKoh82XIs0XkWXLFjCHp3Hp3qh/h2zeeecR59kLnluGGnKGnCVJKpJKfL3eXlj9c4esjt7ZkTdactBoZuWzofEe6lSJLl+5FtCAomeF7Vl43wurvXdAgddV1FM0NJTJadqdyP2x4aYsSBbe9u0bAq9HUHSJZz5wiCTn3YvIQCEIQCEIQCEIQCEIQCEIQCEIQCEIQCEIQCEIQCEIQCEIQCEIQCEIQCEIQCEIQCEIQCEIQCEIQCEIQCEIQH//2Q==
-" width="229" height="322" alt="QR-код для перевода USDT в сети TRC20 на кошелёк студии">
+        <svg class="sup-qr" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" shape-rendering="crispEdges" role="img" aria-label="QR-код для перевода USDT в сети TRC20 на кошелёк студии"><rect width="37" height="37" fill="#fff"/><path fill="#000" d="M4 4h7v1h-7zM14 4h1v1h-1zM17 4h1v1h-1zM20 4h1v1h-1zM26 4h7v1h-7zM4 5h1v1h-1zM10 5h1v1h-1zM13 5h2v1h-2zM16 5h4v1h-4zM26 5h1v1h-1zM32 5h1v1h-1zM4 6h1v1h-1zM6 6h3v1h-3zM10 6h1v1h-1zM13 6h1v1h-1zM15 6h3v1h-3zM20 6h2v1h-2zM24 6h1v1h-1zM26 6h1v1h-1zM28 6h3v1h-3zM32 6h1v1h-1zM4 7h1v1h-1zM6 7h3v1h-3zM10 7h1v1h-1zM13 7h3v1h-3zM17 7h3v1h-3zM21 7h3v1h-3zM26 7h1v1h-1zM28 7h3v1h-3zM32 7h1v1h-1zM4 8h1v1h-1zM6 8h3v1h-3zM10 8h1v1h-1zM13 8h1v1h-1zM15 8h4v1h-4zM20 8h4v1h-4zM26 8h1v1h-1zM28 8h3v1h-3zM32 8h1v1h-1zM4 9h1v1h-1zM10 9h1v1h-1zM12 9h3v1h-3zM17 9h2v1h-2zM22 9h3v1h-3zM26 9h1v1h-1zM32 9h1v1h-1zM4 10h7v1h-7zM12 10h1v1h-1zM14 10h1v1h-1zM16 10h1v1h-1zM18 10h1v1h-1zM20 10h1v1h-1zM22 10h1v1h-1zM24 10h1v1h-1zM26 10h7v1h-7zM13 11h1v1h-1zM15 11h2v1h-2zM18 11h1v1h-1zM21 11h2v1h-2zM4 12h1v1h-1zM7 12h1v1h-1zM9 12h2v1h-2zM12 12h5v1h-5zM19 12h2v1h-2zM24 12h2v1h-2zM27 12h1v1h-1zM4 13h1v1h-1zM6 13h2v1h-2zM11 13h1v1h-1zM16 13h1v1h-1zM18 13h2v1h-2zM23 13h3v1h-3zM29 13h2v1h-2zM4 14h1v1h-1zM7 14h4v1h-4zM21 14h3v1h-3zM26 14h2v1h-2zM30 14h2v1h-2zM4 15h1v1h-1zM7 15h3v1h-3zM11 15h4v1h-4zM16 15h1v1h-1zM18 15h1v1h-1zM23 15h1v1h-1zM25 15h1v1h-1zM27 15h1v1h-1zM30 15h2v1h-2zM6 16h2v1h-2zM10 16h1v1h-1zM15 16h2v1h-2zM21 16h1v1h-1zM25 16h2v1h-2zM28 16h5v1h-5zM7 17h2v1h-2zM15 17h1v1h-1zM20 17h7v1h-7zM29 17h1v1h-1zM6 18h2v1h-2zM10 18h2v1h-2zM14 18h1v1h-1zM21 18h2v1h-2zM25 18h3v1h-3zM29 18h1v1h-1zM31 18h2v1h-2zM4 19h1v1h-1zM7 19h3v1h-3zM12 19h1v1h-1zM14 19h1v1h-1zM16 19h4v1h-4zM21 19h4v1h-4zM27 19h3v1h-3zM31 19h1v1h-1zM4 20h1v1h-1zM6 20h1v1h-1zM9 20h3v1h-3zM13 20h1v1h-1zM15 20h1v1h-1zM17 20h2v1h-2zM20 20h1v1h-1zM24 20h1v1h-1zM27 20h2v1h-2zM31 20h2v1h-2zM8 21h1v1h-1zM12 21h2v1h-2zM15 21h2v1h-2zM19 21h2v1h-2zM22 21h2v1h-2zM26 21h2v1h-2zM29 21h3v1h-3zM4 22h1v1h-1zM6 22h2v1h-2zM10 22h4v1h-4zM15 22h1v1h-1zM17 22h1v1h-1zM20 22h3v1h-3zM24 22h1v1h-1zM26 22h3v1h-3zM31 22h2v1h-2zM7 23h1v1h-1zM11 23h1v1h-1zM13 23h1v1h-1zM17 23h1v1h-1zM19 23h1v1h-1zM21 23h1v1h-1zM24 23h1v1h-1zM26 23h2v1h-2zM29 23h1v1h-1zM31 23h2v1h-2zM4 24h1v1h-1zM7 24h8v1h-8zM16 24h1v1h-1zM18 24h1v1h-1zM20 24h1v1h-1zM24 24h6v1h-6zM31 24h2v1h-2zM12 25h4v1h-4zM17 25h1v1h-1zM20 25h5v1h-5zM28 25h2v1h-2zM4 26h7v1h-7zM15 26h4v1h-4zM24 26h1v1h-1zM26 26h1v1h-1zM28 26h2v1h-2zM31 26h1v1h-1zM4 27h1v1h-1zM10 27h1v1h-1zM12 27h2v1h-2zM15 27h3v1h-3zM20 27h1v1h-1zM22 27h1v1h-1zM24 27h1v1h-1zM28 27h1v1h-1zM30 27h3v1h-3zM4 28h1v1h-1zM6 28h3v1h-3zM10 28h1v1h-1zM13 28h2v1h-2zM18 28h4v1h-4zM24 28h5v1h-5zM32 28h1v1h-1zM4 29h1v1h-1zM6 29h3v1h-3zM10 29h1v1h-1zM12 29h2v1h-2zM15 29h5v1h-5zM21 29h1v1h-1zM24 29h1v1h-1zM26 29h2v1h-2zM31 29h1v1h-1zM4 30h1v1h-1zM6 30h3v1h-3zM10 30h1v1h-1zM13 30h2v1h-2zM18 30h1v1h-1zM20 30h2v1h-2zM23 30h1v1h-1zM25 30h2v1h-2zM28 30h3v1h-3zM32 30h1v1h-1zM4 31h1v1h-1zM10 31h1v1h-1zM13 31h1v1h-1zM15 31h1v1h-1zM21 31h1v1h-1zM23 31h6v1h-6zM31 31h1v1h-1zM4 32h7v1h-7zM12 32h3v1h-3zM19 32h2v1h-2zM24 32h2v1h-2zM28 32h1v1h-1zM30 32h2v1h-2z"/></svg>
       </div>
         </div>
       </div>
@@ -391,6 +409,199 @@ mmenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
   mmenu.classList.remove('open'); burger.setAttribute('aria-expanded', 'false');
 }));
 document.getElementById('year').textContent = new Date().getFullYear();
+
+// Язык: русский по умолчанию, английский по языку браузера.
+// Ручной выбор запоминается и больше не перебивается системой.
+(function () {
+  'use strict';
+
+  var DICT = {
+    'К возможностям': 'Skip to features',
+    'Навигация плагина': 'Plugin navigation',
+    'Открыть меню': 'Open menu',
+    'Возможности': 'Features',
+    'Как работает': 'How it works',
+    'Как это работает': 'How it works',
+    'Статус': 'Status',
+    'Поддержать': 'Support',
+    '❤ Поддержать': '❤ Support',
+    '❤ Поддержать проект': '❤ Support the project',
+    'Расширение, которое подбирает лучший прокси под каждый сайт: собирает пул, тестирует, ранжирует и мгновенно переключается. Вся логика — локально в вашем браузере, без внешних серверов.':
+      'The extension that picks the best proxy for every site: it collects a pool, tests, ranks and switches instantly. Everything runs locally in your browser, with no external servers.',
+    '[ СТАТУС ]': '[ STATUS ]',
+    'в релизе': 'released',
+    '[ ЛИЦЕНЗИЯ ]': '[ LICENSE ]',
+    'бесплатно': 'free',
+    '[ ДАННЫЕ ]': '[ DATA ]',
+    '0 внешних запросов*': '0 external requests*',
+    'Что внутри': "What's inside",
+    '[+] УМНЫЙ ПУЛ': '[+] SMART POOL',
+    'Рейтинг вместо случайности': 'Ranking instead of randomness',
+    'Сбор из источников, чистка истории, blacklist и score на основе успешных подключений.':
+      'Collected from several sources, cleaned history, a blacklist and a score based on successful connections.',
+    '[+] ДВУХФАЗНЫЕ ТЕСТЫ': '[+] TWO-PHASE TESTS',
+    'Early-exit проверки': 'Early-exit checks',
+    'Пинг и exit-IP проверяются с ранним выходом: медленные прокси отсекаются за миллисекунды.':
+      'Ping and exit IP are checked with early exit: slow proxies are discarded within milliseconds.',
+    'Сглаженный рейтинг': 'Smoothed ranking',
+    'Оценка пинга учитывает историю, а не один удачный замер. p50 и p95 под контролем.':
+      'The ping score reflects history rather than a single lucky measurement. p50 and p95 stay under control.',
+    'Переключение без обрывов': 'Switching without drops',
+    'Гистерезис защищает от дёрганья: лишние переключения исключены, деградация — нет.':
+      'Hysteresis prevents flapping: no redundant switches, no silent degradation.',
+    'Прокси только где нужно': 'Proxy only where needed',
+    'Изоляция через PAC: часть трафика идёт напрямую, прокси применяется только к нужным доменам.':
+      'PAC isolation keeps some traffic direct and applies the proxy only to the domains you pick.',
+    '[+] ПРИВАТНОСТЬ': '[+] PRIVACY',
+    'Всё локально': 'Everything local',
+    'Ни одного внешнего сервера студии. Метрики живут в chrome.storage вашего браузера.':
+      'Not a single external studio server. Metrics live in your browser chrome.storage.',
+    '*кроме запросов к самим прокси и сайтам, которые вы посещаете':
+      '*apart from requests to the proxies themselves and the sites you visit',
+    '01 · СБОР': '01 · COLLECT',
+    'Пул кандидатов': 'Candidate pool',
+    'Сырые прокси из источников проходят нормализацию и первичную чистку.':
+      'Raw proxies from the sources are normalised and cleaned up first.',
+    '02 · ТЕСТЫ': '02 · TESTS',
+    'Пинг и exit-IP': 'Ping and exit IP',
+    'Двухфазная проверка с early-exit: скорость и честность адреса.':
+      'A two-phase check with early exit: speed and honesty of the address.',
+    '03 · РЕЙТИНГ': '03 · RANKING',
+    'Лучший кандидат становится активным, остальные в резерве.':
+      'The best candidate becomes active, the rest stay in reserve.',
+    '04 · ЗАЩИТА': '04 · GUARD',
+    'Гистерезис и изоляция по доменам — соединение не падает молча.':
+      'Hysteresis and per-domain isolation mean a connection never dies silently.',
+    'Статус и роадмап': 'Status and roadmap',
+    'Модуль': 'Module',
+    'Описание': 'Description',
+    'Пул и тесты': 'Pool and tests',
+    'Сбор, двухфазные проверки, blacklist': 'Collection, two-phase checks, blacklist',
+    'EWMA-рейтинг': 'EWMA ranking',
+    'Сглаживание пинга, p50/p95, score': 'Ping smoothing, p50/p95, score',
+    'Изоляция прокси по доменам': 'Per-domain proxy isolation',
+    'Авторизация прокси': 'Proxy authentication',
+    'Логин/пароль, авто-apply': 'Login and password, auto-apply',
+    'Метрики пула': 'Pool metrics',
+    'Локальная история и графики': 'Local history and charts',
+    'Импорт списков': 'List import',
+    'Подписки и свои источники': 'Subscriptions and your own sources',
+    '◇ поддержка студии': '◇ studio support',
+    'Поддержать проект': 'Support the project',
+    'Две площадки и крипта. Донаты идут на серверы для проверки прокси-пула и следующие модули плагина.':
+      'Two platforms and crypto. Donations go to the servers that test the proxy pool and to the next plugin modules.',
+    'Разовый донат · dalink.to/encpre': 'One-off donation · dalink.to/encpre',
+    'Подписка от 100 ₽ в месяц · boosty.to/encore.ent': 'Subscription from ₽100 a month · boosty.to/encore.ent',
+    '🪙 USDT · сеть TRC20 (TRON)': '🪙 USDT · TRC20 (TRON) network',
+    'Только TRC20. В другой сети средства не придут.':
+      'TRC20 only. Funds sent over any other network will not arrive.',
+    'Копировать': 'Copy',
+    'Показать QR-код': 'Show QR code',
+    'Скрыть QR-код': 'Hide QR code',
+    '✓ Адрес скопирован. Спасибо за поддержку!': '✓ Address copied. Thank you for supporting!',
+    'Плагин бесплатный?': 'Is the extension free?',
+    'Да, Auto Proxy бесплатен и работает локально. Донат — добровольный способ ускорить новые фичи.':
+      'Yes, Auto Proxy is free and runs locally. A donation is a voluntary way to speed up new features.',
+    'Куда идут донаты?': 'Where do the donations go?',
+    'Приоритет: серверы для проверки прокси-пула → аккаунты разработчиков под другие платформы → следующие модули плагина.':
+      'Priority: servers for testing the proxy pool → developer accounts for other platforms → the next plugin modules.',
+    'Вы собираете мои данные?': 'Do you collect my data?',
+    'Нет. Метрики и история пула хранятся в chrome.storage вашего браузера. Внешних серверов студии нет.':
+      'No. Pool metrics and history are stored in your browser chrome.storage. The studio has no external servers.',
+    'Плагин ломает сайт?': 'Does it break websites?',
+    'PAC-изоляция применяет прокси только к указанным доменам. Остальной трафик идёт напрямую, как обычно.':
+      'PAC isolation applies the proxy only to the domains you specify. Everything else goes direct, as usual.',
+    'Где смотреть разработку?': 'Where can I follow development?',
+    'Обновления выходят здесь же, на странице: раздел «Статус и роадмап» показывает, что уже в релизе, что в работе и что запланировано. Никаких сторонних площадок — только студия и её продукты.':
+      'Updates land right here: the "Status and roadmap" section shows what shipped, what is in progress and what is planned. No third-party platforms — just the studio and its products.',
+    'Студия': 'Studio',
+    'QR-код для перевода USDT в сети TRC20 на кошелёк студии':
+      'QR code for sending USDT on the TRC20 network to the studio wallet'
+  };
+
+  var TITLES = {
+    ru: 'Auto Proxy — плагин EnCore',
+    en: 'Auto Proxy — an EnCore plugin'
+  };
+
+  var DESC = {
+    ru: 'Auto Proxy — расширение Chrome MV3 с автоподбором прокси под каждый сайт: тесты пула, EWMA-рейтинг, failover и PAC-изоляция. Всё считается локально.',
+    en: 'Auto Proxy — a Chrome MV3 extension that picks the best proxy for every site: pool tests, EWMA ranking, failover and PAC isolation. Everything stays local.'
+  };
+
+  var KEY = 'encore-proxy-lang';
+  var ATTRS = ['title', 'alt', 'aria-label', 'placeholder'];
+  var root = document.documentElement;
+
+  function detect() {
+    var saved = null;
+    try { saved = localStorage.getItem(KEY); } catch (e) {}
+    if (saved === 'ru' || saved === 'en') return saved;
+    // Правило простое: русский язык браузера — русская версия,
+    // любой другой — английская. Неопределённый тоже считаем
+    // английским, раз страница двуязычная и рассчитана на широкий рынок.
+    var list = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language];
+    for (var i = 0; i < list.length; i++) {
+      var code = String(list[i] || '').toLowerCase();
+      if (!code) continue;
+      if (code.indexOf('ru') === 0) return 'ru';
+      return 'en';
+    }
+    return 'en';
+  }
+
+  // Пробег по текстовым узлам. Исходный русский текст запоминаем
+  // прямо в узле — тогда переключение туда-обратно точное, а не
+  // обратная замена по странице.
+  function walk(node, lang) {
+    for (var i = 0; i < node.childNodes.length; i++) {
+      var child = node.childNodes[i];
+      if (child.nodeType === 3) {
+        var raw = child.nodeValue;
+        var trimmed = raw.replace(/^\s+|\s+$/g, '');
+        if (!trimmed) continue;
+        if (child.__ru === undefined) child.__ru = trimmed;
+        var lead = raw.slice(0, raw.length - raw.replace(/^\s+/, '').length);
+        var tail = raw.slice(raw.replace(/\s+$/, '').length);
+        var next = (lang === 'en' && DICT[child.__ru]) ? DICT[child.__ru] : child.__ru;
+        child.nodeValue = lead + next + tail;
+      } else if (child.nodeType === 1) {
+        if (child.tagName === 'SCRIPT' || child.tagName === 'STYLE') continue;
+        walk(child, lang);
+        // подписи для скринридеров и подсказки — тоже текст страницы
+        for (var a = 0; a < ATTRS.length; a++) {
+          var name = ATTRS[a];
+          var val = child.getAttribute(name);
+          if (val === null) continue;
+          if (child['__ru_' + name] === undefined) child['__ru_' + name] = val;
+          var src = child['__ru_' + name];
+          child.setAttribute(name, (lang === 'en' && DICT[src]) ? DICT[src] : src);
+        }
+      }
+    }
+  }
+
+  function apply(lang) {
+    walk(document.body, lang);
+    document.title = TITLES[lang];
+    var m = document.querySelector('meta[name="description"]');
+    if (m) m.setAttribute('content', DESC[lang]);
+    root.setAttribute('lang', lang);
+    var btns = document.querySelectorAll('.lang button');
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].setAttribute('aria-pressed', String(btns[i].getAttribute('data-lang') === lang));
+    }
+    try { localStorage.setItem(KEY, lang); } catch (e) {}
+  }
+
+  apply(detect());
+
+  document.addEventListener('click', function (e) {
+    var b = e.target && e.target.closest ? e.target.closest('.lang button') : null;
+    if (!b) return;
+    apply(b.getAttribute('data-lang') === 'en' ? 'en' : 'ru');
+  });
+})();
 
 // Копирование адреса и показ QR-кода. Асинхронный clipboard
 // блокируется без разрешения и на http, поэтому при отказе
