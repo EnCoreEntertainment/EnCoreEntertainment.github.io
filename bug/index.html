@@ -3,70 +3,130 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Report a Bug — EnCore</title>
-<meta name="description" content="Found a bug in an EnCore product? Send a bug report. We read every message.">
-<meta name="theme-color" content="#05070f">
+<title>Report a Bug — Auto Proxy</title>
+<meta name="description" content="Found a bug in Auto Proxy? Send a bug report to the EnCore team. We read every message.">
+<meta name="theme-color" content="#04060b">
 <meta name="color-scheme" content="dark">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2305070f'/%3E%3Cpath d='M18 44 32 14l14 30h-9l-5-12-5 12z' fill='%2322d3ee'/%3E%3Ccircle cx='32' cy='44' r='4' fill='%23a78bfa'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2304060b'/%3E%3Cpath d='M18 44 32 14l14 30h-9l-5-12-5 12z' fill='%2322d3ee'/%3E%3Ccircle cx='32' cy='44' r='4' fill='%23a3e635'/%3E%3C/svg%3E">
 <style>
 *,*::before,*::after{box-sizing:border-box}
-:root{--bg:#05070f;--card:rgba(255,255,255,.045);--line:rgba(255,255,255,.1);--txt:#eef2ff;--mut:#9aa4bf;--cy:#22d3ee;--vi:#a78bfa;--lm:#a3e635;--pk:#f472b6;--r:18px;--font:system-ui,-apple-system,"Segoe UI",Roboto,Inter,Arial,sans-serif}
-body{margin:0;font-family:var(--font);background:var(--bg);color:var(--txt);line-height:1.6;background-image:radial-gradient(900px 480px at 85% -5%,rgba(167,139,250,.18),transparent 60%),radial-gradient(800px 420px at 8% 4%,rgba(34,211,238,.16),transparent 60%);background-attachment:fixed}
-.wrap{width:min(680px,100% - 2.2rem);margin-inline:auto;padding:clamp(2rem,6vw,4rem) 0}
+:root{
+  --bg:#04060b; --panel:#070a11; --line:rgba(34,211,238,.16); --line2:rgba(255,255,255,.1);
+  --txt:#d7f5fb; --mut:#6f8ba0; --dim:#4d6577; --cy:#22d3ee; --lm:#a3e635; --wn:#fcd34d;
+  --font:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  --max:760px;
+}
+html{-webkit-text-size-adjust:100%}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:var(--font);line-height:1.6;
+  background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.02) 0 1px,transparent 1px 3px),
+  radial-gradient(900px 500px at 80% -10%,rgba(34,211,238,.1),transparent 60%),
+  radial-gradient(700px 500px at 5% 105%,rgba(167,139,250,.08),transparent 60%);
+  background-attachment:fixed}
 a{color:var(--cy)}
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:clamp(1.2rem,4vw,2rem)}
-h1{font-size:clamp(1.6rem,5vw,2.3rem);margin:.6rem 0 .4rem;letter-spacing:-.02em}
-.grad{background:linear-gradient(92deg,var(--cy),var(--vi) 55%,var(--pk));-webkit-background-clip:text;background-clip:text;color:transparent}
+:focus-visible{outline:2px solid var(--cy);outline-offset:3px}
+.wrap{width:min(var(--max),100% - 2rem);margin-inline:auto}
 .mut{color:var(--mut)}
-label{display:block;font-weight:700;margin:1rem 0 .4rem}
-input,textarea{width:100%;background:#020617;border:1px solid var(--line);border-radius:12px;color:var(--txt);padding:.85rem 1rem;font-size:1rem;font-family:inherit;min-height:50px}
+.dim{color:var(--dim)}
+.small{font-size:.82rem}
+
+/* header */
+header{position:sticky;top:0;z-index:50;background:rgba(4,6,11,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:1rem;height:62px}
+.brand{display:flex;align-items:center;gap:.55rem;text-decoration:none;color:var(--txt);font-size:.92rem}
+.brand .p{color:var(--lm)}
+.brand .u{color:var(--cy)}
+.back{display:inline-flex;align-items:center;gap:.45rem;text-decoration:none;color:var(--mut);font-size:.85rem;
+  border:1px solid var(--line);background:rgba(34,211,238,.06);padding:.55rem .9rem;border-radius:4px;min-height:42px}
+.back:hover{color:var(--cy);border-color:var(--cy);background:rgba(34,211,238,.14)}
+
+/* layout */
+main{padding:clamp(2rem,6vw,3.6rem) 0 4rem}
+.tag{display:inline-block;font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--lm);
+  border:1px solid rgba(163,230,53,.35);padding:.32rem .7rem;margin-bottom:1.1rem}
+h1{font-size:clamp(1.6rem,5vw,2.5rem);line-height:1.14;margin:0 0 .9rem;letter-spacing:-.01em}
+h1::before{content:"$ ";color:var(--lm)}
+.lead{color:var(--mut);font-size:.95rem;max-width:44rem;margin:0 0 1.8rem}
+
+/* form */
+.card{border:1px solid var(--line);background:var(--panel);padding:clamp(1.1rem,4vw,1.8rem);border-radius:6px}
+.frow{margin:0 0 1.15rem}
+label{display:block;font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--lm);margin:0 0 .45rem}
+input,textarea{width:100%;background:rgba(0,0,0,.55);border:1px solid var(--line2);border-radius:4px;color:var(--txt);
+  padding:.8rem .9rem;font-size:.92rem;font-family:var(--font);line-height:1.55;min-height:48px}
 textarea{min-height:150px;resize:vertical}
+input::placeholder,textarea::placeholder{color:var(--dim)}
 input:focus,textarea:focus{outline:2px solid var(--cy);outline-offset:2px;border-color:var(--cy)}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;font-weight:800;border-radius:14px;padding:.9rem 1.4rem;font-size:1rem;border:1px solid transparent;cursor:pointer;min-height:52px;width:100%;margin-top:1.2rem;background:linear-gradient(135deg,var(--cy),#0ea5e9 45%,var(--vi));color:#020617}
-.btn:disabled{opacity:.55;cursor:wait}
 .hp{position:absolute!important;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
-.status{border-radius:12px;padding:.9rem 1.1rem;margin-top:1rem;display:none;font-size:.95rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;width:100%;min-height:52px;margin-top:.4rem;
+  border:1px solid var(--cy);background:var(--cy);color:#001018;font-family:var(--font);font-size:.9rem;font-weight:700;
+  border-radius:4px;cursor:pointer;text-decoration:none;transition:background .2s,border-color .2s}
+.btn:hover:not(:disabled){background:#5fe4f6;border-color:#5fe4f6}
+.btn:disabled{opacity:.55;cursor:wait}
+
+.status{display:none;border-radius:4px;padding:.9rem 1.05rem;margin-top:1.1rem;font-size:.88rem;line-height:1.55}
 .status.ok{display:block;background:rgba(163,230,53,.1);border:1px solid rgba(163,230,53,.45);color:var(--lm)}
-.status.err{display:block;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.45)}
-.fallback{display:none;margin-top:1rem;gap:.6rem;flex-wrap:wrap}
+.status.err{display:block;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.45);color:#fca5a5}
+.fallback{display:none;margin-top:1.1rem;gap:.6rem;flex-wrap:wrap}
 .fallback.show{display:flex}
-.fallback a,.fallback button{flex:1;min-height:48px;border-radius:11px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--txt);font-weight:700;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;padding:.7rem;cursor:pointer;font-size:.9rem;white-space:nowrap}
-.back{display:inline-block;margin-bottom:1rem;text-decoration:none;font-weight:700}
-.small{font-size:.85rem}
+.fallback a,.fallback button{flex:1 1 180px;min-height:48px;border-radius:4px;border:1px solid var(--line2);
+  background:rgba(255,255,255,.04);color:var(--txt);font-family:var(--font);font-weight:700;text-decoration:none;
+  display:inline-flex;align-items:center;justify-content:center;padding:.7rem;cursor:pointer;font-size:.85rem}
+.fallback a:hover,.fallback button:hover{border-color:var(--cy);color:var(--cy)}
+.hint{font-size:.82rem;min-height:1.4em;margin:.7rem 0 0}
+.note{margin:1.6rem 0 0;padding-top:1.1rem;border-top:1px dashed rgba(255,255,255,.08);font-size:.82rem;color:var(--dim)}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <a class="back" href="/">← Back to EnCore</a>
+<header>
+  <div class="wrap">
+    <nav class="nav" aria-label="Page navigation">
+      <a class="brand" href="/auto-proxy/"><span class="p">encore</span>@<span class="u">proxy</span></a>
+      <a class="back" href="/auto-proxy/">&#8592; Auto Proxy</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <span class="tag">&#9679; bug report</span>
+  <h1>Report a bug</h1>
+  <p class="lead">Found something broken in Auto Proxy or another EnCore product? Tell us &mdash; we read every report. Fields marked * are required.</p>
+
   <div class="card">
-    <h1>Report a <span class="grad">bug</span></h1>
-    <p class="mut">Found something broken in an EnCore product? Tell us — we read every report. Fields marked * are required.</p>
     <form id="bugForm" novalidate>
-      <label for="fName">Your name *</label>
-      <input id="fName" name="name" type="text" autocomplete="name" maxlength="80" required placeholder="Jane Doe">
+      <div class="frow">
+        <label for="fName">Your name *</label>
+        <input id="fName" name="name" type="text" autocomplete="name" maxlength="80" required placeholder="Jane Doe">
+      </div>
 
-      <label for="fEmail">Your email *</label>
-      <input id="fEmail" name="email" type="email" autocomplete="email" maxlength="120" required placeholder="you@example.com">
+      <div class="frow">
+        <label for="fEmail">Your email *</label>
+        <input id="fEmail" name="email" type="email" autocomplete="email" maxlength="120" required placeholder="you@example.com">
+      </div>
 
-      <label for="fDesc">Bug description *</label>
-      <textarea id="fDesc" name="message" required maxlength="5000" placeholder="What happened? What did you expect? Steps to reproduce, browser / device, screenshots description…"></textarea>
+      <div class="frow">
+        <label for="fDesc">Bug description *</label>
+        <textarea id="fDesc" name="message" required maxlength="5000" placeholder="What happened? What did you expect? Steps to reproduce, browser / device, screenshots description&hellip;"></textarea>
+      </div>
 
-      <label for="fCheck">Anti-spam check * <span class="mut small" id="checkQ"></span></label>
-      <input id="fCheck" type="text" inputmode="numeric" autocomplete="off" required placeholder="Your answer">
+      <div class="frow">
+        <label for="fCheck">Anti-spam check * <span class="mut" id="checkQ"></span></label>
+        <input id="fCheck" type="text" inputmode="numeric" autocomplete="off" required placeholder="Your answer">
+      </div>
 
       <input class="hp" type="text" id="fCompany" name="company" tabindex="-1" autocomplete="off" aria-hidden="true">
 
       <button class="btn" id="sendBtn" type="submit">Send bug report</button>
-      <p class="small mut" id="hint" role="status" aria-live="polite" style="min-height:1.4em"></p>
+      <p class="hint mut" id="hint" role="status" aria-live="polite"></p>
     </form>
     <div class="status" id="statusBox" role="status" aria-live="polite"></div>
     <div class="fallback" id="fallbackBox">
       <a id="mailtoBtn" href="#">Open in email app</a>
       <button id="copyBtn" type="button">Copy report</button>
     </div>
-    <p class="small mut">No trackers on this page. Your report goes only to the EnCore team.</p>
+    <p class="note">No trackers on this page. Your report goes only to the EnCore team.</p>
   </div>
-</div>
+</main>
 <script>
 (function(){
   "use strict";
